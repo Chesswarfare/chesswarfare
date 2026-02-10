@@ -178,6 +178,57 @@
             50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
+        .online-lobby-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .online-lobby-overlay.hidden { display: none; }
+        .online-lobby {
+            background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
+            border: 2px solid #ffd700; border-radius: 20px;
+            padding: 30px; text-align: center; max-width: 420px; width: 90%;
+        }
+        .online-lobby h2 { color: #ffd700; margin-bottom: 20px; font-size: 1.5em; }
+        .online-lobby .lobby-status {
+            padding: 8px 16px; border-radius: 20px; font-size: 13px;
+            font-weight: bold; display: inline-block; margin-bottom: 20px;
+        }
+        .lobby-status.connecting { background: #533483; color: #ccc; }
+        .lobby-status.connected { background: #1b5e20; color: #a5d6a7; }
+        .lobby-status.disconnected { background: #b71c1c; color: #ef9a9a; }
+        .online-lobby .lobby-btn {
+            padding: 12px 30px; font-size: 18px; border: none;
+            border-radius: 8px; cursor: pointer; margin: 8px;
+            font-weight: bold; transition: transform 0.1s;
+        }
+        .online-lobby .lobby-btn:active { transform: scale(0.95); }
+        .online-lobby .lobby-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .lobby-btn-create { background: #e94560; color: white; }
+        .lobby-btn-join { background: #0f3460; color: white; }
+        .lobby-btn-back { background: #555; color: white; margin-top: 15px; }
+        .online-lobby input {
+            padding: 12px; font-size: 20px; border-radius: 8px;
+            border: 2px solid #0f3460; text-align: center; width: 140px;
+            text-transform: uppercase; background: #16213e; color: #eee;
+            letter-spacing: 5px;
+        }
+        .lobby-room-code {
+            font-size: 52px; font-weight: bold; color: #e94560;
+            letter-spacing: 12px; margin: 20px 0;
+            text-shadow: 0 0 20px rgba(233,69,96,0.5);
+        }
+        .lobby-waiting { color: #aaa; font-size: 16px; animation: lobbyPulse 1.5s ease-in-out infinite; }
+        @keyframes lobbyPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .online-player-badge {
+            display: inline-block; background: #533483; color: #fff;
+            padding: 4px 12px; border-radius: 15px; font-size: 12px;
+            margin-bottom: 10px;
+        }
+
         .score-display {
             display: flex;
             justify-content: space-around;
@@ -1920,11 +1971,39 @@
         </div>
     </div>
 
+    <!-- ONLINE LOBBY OVERLAY -->
+    <div class="online-lobby-overlay hidden" id="online-lobby-overlay">
+        <div class="online-lobby">
+            <h2>🌐 ONLINE MULTIPLAYER</h2>
+            <div class="lobby-status connecting" id="lobby-conn-status">⏳ Connecting...</div>
+
+            <div id="lobby-menu">
+                <p style="color:#aaa; margin-bottom:20px;">Play Chess Warfare against a friend online!</p>
+                <div>
+                    <button class="lobby-btn lobby-btn-create" id="lobby-create-btn" onclick="onlineCreateRoom()" disabled>Create Room</button>
+                </div>
+                <div style="margin-top:15px;">
+                    <input type="text" id="lobby-code-input" placeholder="CODE" maxlength="4" disabled>
+                    <button class="lobby-btn lobby-btn-join" id="lobby-join-btn" onclick="onlineJoinRoom()" disabled>Join</button>
+                </div>
+                <button class="lobby-btn lobby-btn-back" onclick="onlineLeaveLobby()">Back to Menu</button>
+            </div>
+
+            <div id="lobby-waiting" style="display:none;">
+                <p style="color:#aaa;">Share this code with your friend:</p>
+                <div class="lobby-room-code" id="lobby-display-code"></div>
+                <p class="lobby-waiting">Waiting for opponent...</p>
+                <button class="lobby-btn lobby-btn-back" onclick="onlineLeaveLobby()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <div class="mode-selector hidden" id="mode-selector">
         <div class="mode-content">
             <h2>SELECT GAME MODE</h2>
             <div class="mode-buttons">
                 <button id="pvp-btn" class="mode-button" onclick="selectOpponent(&#39;pvp&#39;)">👥 Player vs Player</button>
+                <button id="online-btn" class="mode-button" onclick="selectOpponent(&#39;online&#39;)">🌐 Online PvP</button>
                 <button id="pvc-btn" class="mode-button selected" onclick="selectOpponent(&#39;pvc&#39;)">🤖 Player vs Computer</button>
                 <button id="ranked-btn" class="mode-button" onclick="selectOpponent(&#39;ranked&#39;)">⚔️ Ranked Mode</button>
             </div>
@@ -1939,6 +2018,12 @@
                     <span>Easy (Random)</span>
                     <span>Hard (Optimal)</span>
                 </div>
+            </div>
+
+            <div id="online-info-section" style="display: none;">
+                <div class="difficulty-label">Online PvP</div>
+                <p style="color:#ccc; font-size:0.9em; margin:10px 0;">Create or join a room to play against a friend on a different device. You'll get a 4-letter code to share.</p>
+                <p style="color:#ffd700; font-size:0.85em;">Player 1 (room creator) = White<br>Player 2 (joins room) = Black</p>
             </div>
 
             <div id="ranked-info-section" style="display: none;">
@@ -2213,6 +2298,156 @@
         let aiDifficulty = 50;
         let isAIThinking = false;
 
+        // ====== ONLINE MULTIPLAYER ======
+        let ws = null;
+        let myColor = null;        // 'white' or 'black'
+        let myPlayerNumber = null;  // 1 or 2
+        let onlineConnected = false;
+        let isRemoteAction = false; // prevents sending back received moves
+
+        function onlineConnect() {
+            if (location.protocol === 'file:') return;
+            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            try {
+                ws = new WebSocket(`${protocol}//${location.host}`);
+            } catch(e) { return; }
+
+            ws.onopen = () => {
+                onlineConnected = true;
+                updateLobbyStatus('connected', 'Connected');
+                setLobbyButtonsEnabled(true);
+            };
+
+            ws.onmessage = (event) => {
+                let msg;
+                try { msg = JSON.parse(event.data); } catch { return; }
+
+                switch(msg.type) {
+                    case 'room_created':
+                        myPlayerNumber = 1;
+                        myColor = 'white';
+                        document.getElementById('lobby-display-code').textContent = msg.roomCode;
+                        document.getElementById('lobby-menu').style.display = 'none';
+                        document.getElementById('lobby-waiting').style.display = 'block';
+                        break;
+
+                    case 'room_joined':
+                        myPlayerNumber = 2;
+                        myColor = 'black';
+                        break;
+
+                    case 'game_start':
+                        document.getElementById('online-lobby-overlay').classList.add('hidden');
+                        startOnlineGame();
+                        break;
+
+                    case 'game_move':
+                        handleRemoteAction(msg.move);
+                        break;
+
+                    case 'player_disconnected':
+                        if (gameActive && gameMode === 'online') {
+                            showMessage('OPPONENT DISCONNECTED', 'Your opponent left the game.', true);
+                            gameActive = false;
+                        }
+                        break;
+
+                    case 'error':
+                        alert(msg.message);
+                        break;
+                }
+            };
+
+            ws.onerror = () => {
+                updateLobbyStatus('disconnected', 'Connection error');
+            };
+
+            ws.onclose = () => {
+                onlineConnected = false;
+                setLobbyButtonsEnabled(false);
+                updateLobbyStatus('disconnected', 'Disconnected');
+                // Auto-reconnect
+                setTimeout(() => { if (!onlineConnected) onlineConnect(); }, 3000);
+            };
+        }
+
+        function updateLobbyStatus(state, text) {
+            const el = document.getElementById('lobby-conn-status');
+            if (!el) return;
+            el.className = 'lobby-status ' + state;
+            const icons = {connecting:'⏳', connected:'✅', disconnected:'❌'};
+            el.textContent = (icons[state]||'') + ' ' + text;
+        }
+
+        function setLobbyButtonsEnabled(enabled) {
+            const ids = ['lobby-create-btn','lobby-join-btn','lobby-code-input'];
+            ids.forEach(id => { const el = document.getElementById(id); if(el) el.disabled = !enabled; });
+        }
+
+        function onlineCreateRoom() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({ type: 'create_room' }));
+        }
+
+        function onlineJoinRoom() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            const code = document.getElementById('lobby-code-input').value.trim();
+            if (code.length !== 4) { alert('Enter a 4-letter room code'); return; }
+            ws.send(JSON.stringify({ type: 'join_room', roomCode: code }));
+        }
+
+        function onlineLeaveLobby() {
+            document.getElementById('online-lobby-overlay').classList.add('hidden');
+            document.getElementById('lobby-menu').style.display = 'block';
+            document.getElementById('lobby-waiting').style.display = 'none';
+            if (ws) ws.close();
+            ws = null;
+            onlineConnected = false;
+            newGame();
+        }
+
+        function startOnlineGame() {
+            document.getElementById('mode-selector').classList.add('hidden');
+            document.getElementById('battle-title').textContent = 
+                'CHESS WARFARE — ONLINE (' + (myColor === 'white' ? '⬜ White' : '⬛ Black') + ')';
+            rankedMode = false;
+            document.getElementById('ranked-hud').classList.remove('active');
+            initStandardBoard();
+            initPieceReferenceGuide();
+            gameActive = true;
+            renderBoard();
+        }
+
+        function sendOnlineAction(actionData) {
+            if (gameMode !== 'online' || isRemoteAction || !ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({ type: 'game_move', move: actionData }));
+        }
+
+        function handleRemoteAction(data) {
+            if (!data) return;
+            isRemoteAction = true;
+            if (data.action === 'move') {
+                makeMove(data.fromRow, data.fromCol, data.toRow, data.toCol);
+                clearSelection();
+            } else if (data.action === 'ability') {
+                useAbility(data.fromRow, data.fromCol, data.toRow, data.toCol, data.abilityType);
+                clearSelection();
+            } else if (data.action === 'promote') {
+                document.getElementById('promotion-overlay').classList.add('hidden');
+                promotePawn(data.row, data.col, data.newType);
+                switchTurn();
+                applyPoisonDamage();
+                renderBoard();
+                checkGameEnd();
+            }
+            isRemoteAction = false;
+        }
+
+        function isMyTurnOnline() {
+            if (gameMode !== 'online') return true;
+            return currentTurn === myColor;
+        }
+
         const pieceInfo = {
             'k': { name: 'King', hp: 250, movement: 'Moves 1 square any direction', ability: 'Counter-Strike', abilityDesc: 'Gain shield + deal 100 damage to all pieces attacking the King' },
             'q': { name: 'Queen', hp: 120, movement: 'Moves any direction, any distance', ability: 'Heal', abilityDesc: 'Restore 50 HP to a friendly piece' },
@@ -2434,19 +2669,28 @@
             document.getElementById('pvp-btn').classList.remove('selected');
             document.getElementById('pvc-btn').classList.remove('selected');
             document.getElementById('ranked-btn').classList.remove('selected');
+            document.getElementById('online-btn').classList.remove('selected');
             
             if (mode === 'pvp') {
                 document.getElementById('pvp-btn').classList.add('selected');
                 document.getElementById('ai-difficulty-section').style.display = 'none';
                 document.getElementById('ranked-info-section').style.display = 'none';
+                document.getElementById('online-info-section').style.display = 'none';
+            } else if (mode === 'online') {
+                document.getElementById('online-btn').classList.add('selected');
+                document.getElementById('ai-difficulty-section').style.display = 'none';
+                document.getElementById('ranked-info-section').style.display = 'none';
+                document.getElementById('online-info-section').style.display = 'block';
             } else if (mode === 'pvc') {
                 document.getElementById('pvc-btn').classList.add('selected');
                 document.getElementById('ai-difficulty-section').style.display = 'block';
                 document.getElementById('ranked-info-section').style.display = 'none';
+                document.getElementById('online-info-section').style.display = 'none';
             } else if (mode === 'ranked') {
                 document.getElementById('ranked-btn').classList.add('selected');
                 document.getElementById('ai-difficulty-section').style.display = 'none';
                 document.getElementById('ranked-info-section').style.display = 'block';
+                document.getElementById('online-info-section').style.display = 'none';
             }
             document.getElementById('start-game-btn').style.display = 'block';
         }
@@ -2475,6 +2719,17 @@
         }
 
         function startSelectedGame() {
+            if (gameMode === 'online') {
+                // Show the lobby and connect
+                document.getElementById('mode-selector').classList.add('hidden');
+                document.getElementById('online-lobby-overlay').classList.remove('hidden');
+                document.getElementById('lobby-menu').style.display = 'block';
+                document.getElementById('lobby-waiting').style.display = 'none';
+                document.getElementById('lobby-code-input').value = '';
+                onlineConnect();
+                return;
+            }
+
             document.getElementById('mode-selector').classList.add('hidden');
             document.getElementById('battle-title').textContent = 'CHESS WARFARE';
             
@@ -2626,6 +2881,7 @@
         function handleSquareClick(row, col) {
             if (!gameActive) return;
             if (gameMode === 'pvc' && currentTurn === 'black') return;
+            if (gameMode === 'online' && !isMyTurnOnline() && !isRemoteAction) return;
 
             const clickedPiece = board[row][col];
 
@@ -2667,6 +2923,7 @@
         function handleSquareDoubleClick(row, col) {
             if (!gameActive) return;
             if (gameMode === 'pvc' && currentTurn === 'black') return;
+            if (gameMode === 'online' && !isMyTurnOnline()) return;
 
             const clickedPiece = board[row][col];
             if (!clickedPiece || clickedPiece.type[0] !== currentTurn[0]) return;
@@ -3584,6 +3841,9 @@
 
         // ====== MAKING MOVES ======
         function makeMove(fromRow, fromCol, toRow, toCol) {
+            // Notify the other player in online mode
+            sendOnlineAction({action:'move', fromRow, fromCol, toRow, toCol});
+
             const movingPiece = board[fromRow][fromCol];
             const targetPiece = board[toRow][toCol];
 
@@ -3645,6 +3905,10 @@
                 if (toRow === promotionRow) {
                     if (gameMode === 'pvc' && color === 'b') {
                         promotePawn(toRow, toCol, 'q');
+                    } else if (gameMode === 'online' && isRemoteAction) {
+                        // Wait for separate 'promote' action from remote
+                        renderBoard();
+                        return;
                     } else {
                         renderBoard();
                         showPromotionDialog(toRow, toCol, color);
@@ -3743,6 +4007,9 @@
         }
 
         function useAbility(fromRow, fromCol, toRow, toCol, abilityType) {
+            // Notify the other player in online mode
+            sendOnlineAction({action:'ability', fromRow, fromCol, toRow, toCol, abilityType});
+
             const piece = board[fromRow][fromCol];
             if (piece) {
                 piece.abilityUsed = true;
@@ -4050,6 +4317,7 @@
                 btn.textContent = opt.symbol;
                 btn.addEventListener('click', () => {
                     overlay.classList.add('hidden');
+                    sendOnlineAction({action:'promote', row, col, newType: opt.type});
                     promotePawn(row, col, opt.type);
                     switchTurn();
                     applyPoisonDamage();
@@ -4320,13 +4588,18 @@
             const color = currentTurn === 'white' ? 'w' : 'b';
             const inCheck = isKingInCheck(color);
 
+            let turnText = currentTurn === 'white' ? '⬜ White\'s Turn' : '⬛ Black\'s Turn';
+            if (gameMode === 'online') {
+                turnText += isMyTurnOnline() ? ' (YOUR TURN)' : ' (Waiting...)';
+            }
+
             if (inCheck) {
-                indicator.textContent = currentTurn === 'white' ? '⬜ White\'s Turn ⚠️ CHECK!' : '⬛ Black\'s Turn ⚠️ CHECK!';
+                indicator.textContent = turnText + ' ⚠️ CHECK!';
                 indicator.style.color = '#ff0044';
                 indicator.style.animation = 'checkPulse 0.5s ease-in-out infinite';
             } else {
-                indicator.textContent = currentTurn === 'white' ? '⬜ White\'s Turn' : '⬛ Black\'s Turn';
-                indicator.style.color = '#ffd700';
+                indicator.textContent = turnText;
+                indicator.style.color = isMyTurnOnline() ? '#ffd700' : '#aaa';
                 indicator.style.animation = 'turnGlow 2s ease-in-out infinite';
             }
         }
@@ -4446,6 +4719,12 @@
             isAIThinking = false;
             landmines = [];
             rankedMode = false;
+            myColor = null;
+            myPlayerNumber = null;
+
+            // Close online connection if open
+            if (ws) { ws.close(); ws = null; onlineConnected = false; }
+            document.getElementById('online-lobby-overlay').classList.add('hidden');
 
             board = Array(8).fill(null).map(() => Array(8).fill(null));
             hideMessage();
@@ -4455,8 +4734,10 @@
             document.getElementById('pvp-btn').classList.remove('selected');
             document.getElementById('pvc-btn').classList.remove('selected');
             document.getElementById('ranked-btn').classList.remove('selected');
+            document.getElementById('online-btn').classList.remove('selected');
             document.getElementById('ai-difficulty-section').style.display = 'none';
             document.getElementById('ranked-info-section').style.display = 'none';
+            document.getElementById('online-info-section').style.display = 'none';
             document.getElementById('start-game-btn').style.display = 'none';
             document.getElementById('ranked-hud').classList.remove('active');
 
@@ -4699,6 +4980,9 @@
         window.onload = function() {
             initRankedInfoDisplay();
             document.getElementById('mode-selector').classList.remove('hidden');
+            document.getElementById('lobby-code-input').addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') onlineJoinRoom();
+            });
         };
     </script>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///Users/lindseylister/Downloads/index_4.html -->
+<!-- saved from url=(0050)file:///Users/lindseylister/Downloads/index_5.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Warfare - Ranked</title>
@@ -2322,39 +2322,44 @@
                 let msg;
                 try { msg = JSON.parse(event.data); } catch { return; }
 
-                switch(msg.type) {
-                    case 'room_created':
-                        myPlayerNumber = 1;
-                        myColor = 'white';
-                        document.getElementById('lobby-display-code').textContent = msg.code;
-                        document.getElementById('lobby-menu').style.display = 'none';
-                        document.getElementById('lobby-waiting').style.display = 'block';
-                        break;
+                try {
+                    switch(msg.type) {
+                        case 'room_created':
+                            myPlayerNumber = 1;
+                            myColor = 'white';
+                            document.getElementById('lobby-display-code').textContent = msg.code;
+                            document.getElementById('lobby-menu').style.display = 'none';
+                            document.getElementById('lobby-waiting').style.display = 'block';
+                            break;
 
-                    case 'room_joined':
-                        myPlayerNumber = 2;
-                        myColor = 'black';
-                        break;
+                        case 'room_joined':
+                            myPlayerNumber = 2;
+                            myColor = 'black';
+                            break;
 
-                    case 'game_start':
-                        document.getElementById('online-lobby-overlay').classList.add('hidden');
-                        startOnlineGame();
-                        break;
+                        case 'game_start':
+                            document.getElementById('online-lobby-overlay').classList.add('hidden');
+                            startOnlineGame();
+                            break;
 
-                    case 'game_move':
-                        handleRemoteAction(msg.move);
-                        break;
+                        case 'game_move':
+                            handleRemoteAction(msg.move);
+                            break;
 
-                    case 'player_disconnected':
-                        if (gameActive && gameMode === 'online') {
-                            showMessage('OPPONENT DISCONNECTED', 'Your opponent left the game.', true);
-                            gameActive = false;
-                        }
-                        break;
+                        case 'player_disconnected':
+                            if (gameActive && gameMode === 'online') {
+                                showMessage('OPPONENT DISCONNECTED', 'Your opponent left the game.', true);
+                                gameActive = false;
+                            }
+                            break;
 
-                    case 'error':
-                        alert(msg.message);
-                        break;
+                        case 'error':
+                            alert(msg.message);
+                            break;
+                    }
+                } catch(e) {
+                    console.error('WebSocket message handling error:', e);
+                    isRemoteAction = false; // always reset
                 }
             };
 
@@ -2426,19 +2431,34 @@
         function handleRemoteAction(data) {
             if (!data) return;
             isRemoteAction = true;
-            if (data.action === 'move') {
-                makeMove(data.fromRow, data.fromCol, data.toRow, data.toCol);
-                clearSelection();
-            } else if (data.action === 'ability') {
-                useAbility(data.fromRow, data.fromCol, data.toRow, data.toCol, data.abilityType);
-                clearSelection();
-            } else if (data.action === 'promote') {
-                document.getElementById('promotion-overlay').classList.add('hidden');
-                promotePawn(data.row, data.col, data.newType);
-                switchTurn();
-                applyPoisonDamage();
-                renderBoard();
-                checkGameEnd();
+            try {
+                if (data.action === 'move') {
+                    // Guard: make sure piece exists at source square
+                    if (!board[data.fromRow][data.fromCol]) {
+                        console.warn('Remote move: no piece at', data.fromRow, data.fromCol, '- forcing board sync');
+                        isRemoteAction = false;
+                        return;
+                    }
+                    makeMove(data.fromRow, data.fromCol, data.toRow, data.toCol);
+                    clearSelection();
+                } else if (data.action === 'ability') {
+                    if (!board[data.fromRow][data.fromCol]) {
+                        console.warn('Remote ability: no piece at', data.fromRow, data.fromCol);
+                        isRemoteAction = false;
+                        return;
+                    }
+                    useAbility(data.fromRow, data.fromCol, data.toRow, data.toCol, data.abilityType);
+                    clearSelection();
+                } else if (data.action === 'promote') {
+                    document.getElementById('promotion-overlay').classList.add('hidden');
+                    promotePawn(data.row, data.col, data.newType);
+                    switchTurn();
+                    applyPoisonDamage();
+                    renderBoard();
+                    checkGameEnd();
+                }
+            } catch(e) {
+                console.error('Remote action error:', e, 'Data:', data);
             }
             isRemoteAction = false;
         }
@@ -3975,6 +3995,9 @@
 
         // ====== MAKING MOVES ======
         function makeMove(fromRow, fromCol, toRow, toCol) {
+            // Guard against null piece (can happen if boards desync in online)
+            if (!board[fromRow][fromCol]) return;
+
             // Notify the other player in online mode
             sendOnlineAction({action:'move', fromRow, fromCol, toRow, toCol});
 

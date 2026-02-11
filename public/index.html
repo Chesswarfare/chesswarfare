@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///Users/lindseylister/Downloads/index_3.html -->
+<!-- saved from url=(0050)file:///Users/lindseylister/Downloads/index_4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Warfare - Ranked</title>
@@ -2012,7 +2012,7 @@
                 <div class="difficulty-label">AI Difficulty Level</div>
                 <div class="difficulty-container">
                     <input type="range" id="difficulty-slider" min="1" max="100" value="50" oninput="updateDifficultyDisplay()">
-                    <div id="difficulty-value">40</div>
+                    <div id="difficulty-value">100</div>
                 </div>
                 <div class="difficulty-labels">
                     <span>Easy (Random)</span>
@@ -2326,7 +2326,7 @@
                     case 'room_created':
                         myPlayerNumber = 1;
                         myColor = 'white';
-                        document.getElementById('lobby-display-code').textContent = msg.roomCode;
+                        document.getElementById('lobby-display-code').textContent = msg.code;
                         document.getElementById('lobby-menu').style.display = 'none';
                         document.getElementById('lobby-waiting').style.display = 'block';
                         break;
@@ -2393,7 +2393,7 @@
             if (!ws || ws.readyState !== WebSocket.OPEN) return;
             const code = document.getElementById('lobby-code-input').value.trim();
             if (code.length !== 4) { alert('Enter a 4-letter room code'); return; }
-            ws.send(JSON.stringify({ type: 'join_room', roomCode: code }));
+            ws.send(JSON.stringify({ type: 'join_room', code: code }));
         }
 
         function onlineLeaveLobby() {

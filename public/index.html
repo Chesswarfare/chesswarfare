@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0241)file:///Users/lindseylister/Library/Application%20Support/Claude/local-agent-mode-sessions/f4fcb6cd-71fe-4f1e-844a-a31b777d2327/511adf6e-da60-4605-8c49-0477ca4fad16/local_5ba2246a-f59d-459c-a086-a1e5ff624f48/outputs/Chess%20Warfare%20v4.html -->
+<!-- saved from url=(0241)file:///Users/lindseylister/Library/Application%20Support/Claude/local-agent-mode-sessions/f4fcb6cd-71fe-4f1e-844a-a31b777d2327/511adf6e-da60-4605-8c49-0477ca4fad16/local_5ba2246a-f59d-459c-a086-a1e5ff624f48/outputs/Chess%20Warfare%20v8.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Warfare</title>
@@ -26,9 +26,9 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #302921;
-            min-height: 100vh;
-            padding: 10px;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
+            padding: 6px 10px;
             touch-action: manipulation;
             width: 100%;
             position: relative;
@@ -41,58 +41,75 @@
 
         .game-layout {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: flex-start;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        h1 {
-            text-align: center;
-            color: #f0d9b5;
-            font-size: 2.2em;
-            margin: 10px 0;
-            letter-spacing: 0.04em;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-            to { text-shadow: 0 2px 8px rgba(240,217,181,0.4); }
-        }
-
-        .battle-title {
-            text-align: center;
-            color: #b58863;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            font-weight: bold;
-            letter-spacing: 0.08em;
-        }
-
-        @keyframes battleGlow {
-            from { opacity: 1; }
-            to { opacity: 0.85; }
-        }
-
-
-        .turn-display {
-            font-size: 1.4em;
-            font-weight: bold;
-            text-align: center;
-            color: #f0d9b5;
-            padding: 10px 15px;
-            margin-bottom: 12px;
+        /* compact single header bar */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 6px;
             background: #272522;
             border-radius: 6px;
             border: 1px solid #403d39;
-            letter-spacing: 0.03em;
+            padding: 0 16px;
+            height: 38px;
+            flex-shrink: 0;
         }
 
-        @keyframes turnGlow {
-            0%, 100% { box-shadow: 0 0 6px rgba(240, 217, 181, 0.2); }
-            50% { box-shadow: 0 0 12px rgba(240, 217, 181, 0.4); }
+        .battle-title {
+            font-size: 2em;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            text-align: center;
+            padding: 6px 0 8px;
+            margin-bottom: 2px;
+            color: #ffd060;
+            text-shadow:
+                0 0 8px  rgba(255, 210, 60, 0.95),
+                0 0 20px rgba(255, 160,  0, 0.65),
+                0 0 45px rgba(200, 100,  0, 0.30),
+                0 2px 5px rgba(0,   0,   0, 0.95);
+            animation: titleGlow 3s ease-in-out infinite;
+            border-bottom: 1px solid rgba(181, 136, 99, 0.25);
         }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                color: #ffd060;
+                text-shadow:
+                    0 0 8px  rgba(255,210, 60,0.95),
+                    0 0 20px rgba(255,160,  0,0.65),
+                    0 0 45px rgba(200,100,  0,0.30),
+                    0 2px 5px rgba(0,0,0,0.95);
+            }
+            50% {
+                color: #ffe880;
+                text-shadow:
+                    0 0 14px rgba(255,230, 80,1.00),
+                    0 0 32px rgba(255,175,  0,0.85),
+                    0 0 65px rgba(255,120,  0,0.45),
+                    0 2px 5px rgba(0,0,0,0.95);
+            }
+        }
+
+        .turn-display {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #f0d9b5;
+            letter-spacing: 0.02em;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @keyframes glow { from {} to {} }
+        @keyframes battleGlow { from {} to {} }
+        @keyframes turnGlow { from {} to {} }
 
         .online-lobby-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -147,46 +164,40 @@
 
         .score-display {
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            padding: 10px;
-            margin-bottom: 15px;
-            background: #272522;
-            border-radius: 8px;
-            border: 1px solid #403d39;
+            gap: 10px;
         }
 
         .score-section {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .score-label {
-            font-size: 1.2em;
+            font-size: 0.9em;
             font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            color: #f0d9b5;
+            white-space: nowrap;
         }
 
         .score-value {
-            font-size: 1.5em;
+            font-size: 1.1em;
             font-weight: bold;
             color: #b58863;
-            text-shadow: none;
         }
 
         .board-container {
             background: #272522;
-            padding: 12px;
+            padding: 8px;
             border-radius: 8px;
             border: 2px solid #403d39;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             position: relative;
             width: 100%;
-            max-width: 530px;
+            max-width: 460px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -197,9 +208,9 @@
             grid-template-rows: repeat(8, 1fr);
             gap: 0;
             width: 90vw;
-            max-width: 500px;
+            max-width: 430px;
             height: 90vw;
-            max-height: 500px;
+            max-height: 430px;
             margin: 0 auto;
             border: 4px solid #403d39;
             border-radius: 4px;
@@ -454,9 +465,9 @@
 
         .controls {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 6px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -769,12 +780,14 @@
 
         .piece-reference-guide {
             background: #272522;
-            padding: 15px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #403d39;
-            width: 340px;
+            width: 300px;
             flex-shrink: 0;
             order: -1;
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
         }
 
         .piece-reference-guide h3 {
@@ -859,6 +872,9 @@
             background: #302921;
             border-radius: 8px;
             border: 1px solid #403d39;
+            /* Fixed height so buttons below never shift */
+            height: 96px;
+            overflow: hidden;
         }
 
         .piece-info-panel h3 {
@@ -1370,17 +1386,18 @@
 </head>
 <body>
     <div class="container" style="">
-        <h1>♟️ CHESS WARFARE ♟️</h1>
         <div id="battle-title" class="battle-title">CHESS WARFARE</div>
-        <div class="turn-display" id="turn-display" style="color: rgb(255, 215, 0); animation: 2s ease-in-out 0s infinite normal none running turnGlow;">⬜ White's Turn</div>
-        <div class="score-display">
-            <div class="score-section">
-                <div class="score-label">White Score</div>
-                <div class="score-value" id="white-score">0</div>
-            </div>
-            <div class="score-section">
-                <div class="score-label">Black Score</div>
-                <div class="score-value" id="black-score">0</div>
+        <div class="header-bar">
+            <div class="turn-display" id="turn-display" style="color: rgb(255, 215, 0); animation: 2s ease-in-out 0s infinite normal none running turnGlow;">⬜ White's Turn</div>
+            <div class="score-display">
+                <div class="score-section">
+                    <div class="score-label">⬜</div>
+                    <div class="score-value" id="white-score">0</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">⬛</div>
+                    <div class="score-value" id="black-score">0</div>
+                </div>
             </div>
         </div>
 
@@ -1390,41 +1407,41 @@
                 <div class="piece-reference-grid" id="piece-reference-grid"><div class="piece-ref-item" data-type="k">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_kw3rcey" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_kwol3a0" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_kw3rcey" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_kwol3a0" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_kw3rcey" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_kwol3a0" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_kw3rcey)">
+                        <g filter="url(#shadow_kwol3a0)">
                         <!-- Base -->
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Pedestal -->
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Collar -->
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Upper body -->
-                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Crown rim -->
-                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Crown notches -->
-                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Cross -->
-                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></rect>
-                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kw3rcey)" stroke="#7a6a4a" stroke-width="1"></rect>
+                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></rect>
+                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kwol3a0)" stroke="#7a6a4a" stroke-width="1"></rect>
                         <!-- Shine overlay -->
-                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kw3rcey)"></path>
-                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kw3rcey)" opacity="0.4"></path>
+                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kwol3a0)"></path>
+                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kwol3a0)" opacity="0.4"></path>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">King</div>
@@ -1436,36 +1453,36 @@
                 </div><div class="piece-ref-item" data-type="q">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_qwufx6p" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_qwws79d" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_qwufx6p" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_qwws79d" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_qwufx6p" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_qwws79d" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_qwufx6p)">
+                        <g filter="url(#shadow_qwws79d)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Coronet points -->
-                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Coronet balls -->
-                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="25" cy="9" r="2" fill="url(#grad_qwufx6p)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="25" cy="9" r="2" fill="url(#grad_qwws79d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
                         <!-- Shine -->
-                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qwufx6p)"></path>
+                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qwws79d)"></path>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">Queen</div>
@@ -1477,32 +1494,32 @@
                 </div><div class="piece-ref-item" data-type="r">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_rwkatf0" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_rwxnf27" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_rwkatf0" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_rwxnf27" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_rwkatf0" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_rwxnf27" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_rwkatf0)">
+                        <g filter="url(#shadow_rwxnf27)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Tower body -->
-                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Top rim -->
-                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Battlements -->
-                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwkatf0)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwxnf27)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Shine -->
-                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwkatf0)" opacity="0.5"></rect>
-                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwkatf0)" opacity="0.3"></rect>
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwxnf27)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwxnf27)" opacity="0.3"></rect>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">Rook</div>
@@ -1514,34 +1531,34 @@
                 </div><div class="piece-ref-item" data-type="b">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_bw4crd8" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_bwcykec" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_bw4crd8" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_bwcykec" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_bw4crd8" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_bwcykec" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_bw4crd8)">
+                        <g filter="url(#shadow_bwcykec)">
                         <ellipse cx="25" cy="44" rx="12" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Mitre (head) -->
-                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Mitre slit -->
                         <path d="M23 24 L25 14 L27 24" fill="none" stroke="#7a6a4a" stroke-width="1.2"></path>
                         <!-- Ball on top -->
-                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bw4crd8)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bwcykec)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine -->
-                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bw4crd8)" opacity="0.5"></path>
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bwcykec)" opacity="0.5"></path>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">Bishop</div>
@@ -1553,27 +1570,27 @@
                 </div><div class="piece-ref-item" data-type="n">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_nwnwi9n" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_nwbsw31" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_nwnwi9n" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_nwbsw31" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_nwnwi9n" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_nwbsw31" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_nwnwi9n)">
+                        <g filter="url(#shadow_nwbsw31)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwnwi9n)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwnwi9n)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwnwi9n)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwbsw31)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwbsw31)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwbsw31)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck & head -->
-                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwnwi9n)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwbsw31)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Ear -->
-                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwnwi9n)" stroke="#7a6a4a" stroke-width="0.8"></path>
+                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwbsw31)" stroke="#7a6a4a" stroke-width="0.8"></path>
                         <!-- Eye -->
                         <circle cx="20" cy="14" r="2" fill="#4a3a2a"></circle>
                         <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
@@ -1585,7 +1602,7 @@
                         <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#8a7a5a" opacity="0.3"></path>
                         <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#8a7a5a" opacity="0.2"></path>
                         <!-- Shine -->
-                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwnwi9n)" opacity="0.4"></path>
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwbsw31)" opacity="0.4"></path>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">Knight</div>
@@ -1597,30 +1614,30 @@
                 </div><div class="piece-ref-item" data-type="p">
                     <div class="piece-ref-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pwzssr0" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwrr8sj" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pwzssr0" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwrr8sj" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pwzssr0" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwrr8sj" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pwzssr0)">
+                        <g filter="url(#shadow_pwrr8sj)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwzssr0)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwrr8sj)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwzssr0)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwrr8sj)" opacity="0.5"></circle>
                         </g>
                     </svg></div>
                     <div class="piece-ref-name">Pawn</div>
@@ -1638,36 +1655,38 @@
                     <div class="piece-info-content" id="piece-info-content" style="display: none;">
                         <div class="piece-info-svg-wrap" id="piece-info-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pb2g2d2" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_rbk5cq9" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pb2g2d2" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_rbk5cq9" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pb2g2d2" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_rbk5cq9" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pb2g2d2)">
-                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></ellipse>
-                        <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></ellipse>
-                        <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pb2g2d2)" stroke="#000" stroke-width="1"></circle>
-                        <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pb2g2d2)" opacity="0.5"></circle>
+                        <g filter="url(#shadow_rbk5cq9)">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></ellipse>
+                        <!-- Tower body -->
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></path>
+                        <!-- Top rim -->
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></path>
+                        <!-- Battlements -->
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rbk5cq9)" stroke="#000" stroke-width="1"></path>
+                        <!-- Shine -->
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rbk5cq9)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rbk5cq9)" opacity="0.3"></rect>
                         </g>
                     </svg></div>
                         <div class="piece-info-right">
-                            <div class="piece-info-name" id="piece-info-name">Pawn</div>
+                            <div class="piece-info-name" id="piece-info-name">Rook</div>
                             <div class="piece-info-color-badge black" id="piece-info-badge">BLACK</div>
-                            <div class="piece-info-hp-text" id="piece-info-hp-text">HP: 30 / 30</div>
+                            <div class="piece-info-hp-text" id="piece-info-hp-text">HP: 75 / 75</div>
                             <div class="piece-info-hp-bar-wrap">
                                 <div class="piece-info-hp-bar" id="piece-info-hp-bar" style="width: 100%; background: rgb(106, 171, 68);"></div>
                             </div>
@@ -1681,32 +1700,32 @@
                             <span class="piece " data-tooltip="Rook: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_rb70rih" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_rb34hla" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_rb70rih" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_rb34hla" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_rb70rih" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_rb34hla" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_rb70rih)">
+                        <g filter="url(#shadow_rb34hla)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Tower body -->
-                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></path>
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></path>
                         <!-- Top rim -->
-                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></path>
                         <!-- Battlements -->
-                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rb70rih)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rb34hla)" stroke="#000" stroke-width="1"></path>
                         <!-- Shine -->
-                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rb70rih)" opacity="0.5"></rect>
-                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rb70rih)" opacity="0.3"></rect>
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rb34hla)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rb34hla)" opacity="0.3"></rect>
                         </g>
                     </svg>
                             </span>
@@ -1721,27 +1740,27 @@
                             <span class="piece " data-tooltip="Knight: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_nb60kif" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_nbzu9rg" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_nb60kif" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_nbzu9rg" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_nb60kif" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_nbzu9rg" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_nb60kif)">
+                        <g filter="url(#shadow_nbzu9rg)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nb60kif)" stroke="#000" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nb60kif)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nb60kif)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nbzu9rg)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nbzu9rg)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nbzu9rg)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck & head -->
-                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nb60kif)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nbzu9rg)" stroke="#000" stroke-width="1"></path>
                         <!-- Ear -->
-                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nb60kif)" stroke="#000" stroke-width="0.8"></path>
+                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nbzu9rg)" stroke="#000" stroke-width="0.8"></path>
                         <!-- Eye -->
                         <circle cx="20" cy="14" r="2" fill="#888"></circle>
                         <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
@@ -1753,7 +1772,7 @@
                         <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#000" opacity="0.3"></path>
                         <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#000" opacity="0.2"></path>
                         <!-- Shine -->
-                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nb60kif)" opacity="0.4"></path>
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nbzu9rg)" opacity="0.4"></path>
                         </g>
                     </svg>
                             </span>
@@ -1768,34 +1787,34 @@
                             <span class="piece " data-tooltip="Bishop: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_bbmzr2a" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_bbxpg14" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_bbmzr2a" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_bbxpg14" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_bbmzr2a" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_bbxpg14" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_bbmzr2a)">
+                        <g filter="url(#shadow_bbxpg14)">
                         <ellipse cx="25" cy="44" rx="12" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></path>
-                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Mitre (head) -->
-                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></path>
                         <!-- Mitre slit -->
                         <path d="M23 24 L25 14 L27 24" fill="none" stroke="#000" stroke-width="1.2"></path>
                         <!-- Ball on top -->
-                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bbmzr2a)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bbxpg14)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine -->
-                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bbmzr2a)" opacity="0.5"></path>
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bbxpg14)" opacity="0.5"></path>
                         </g>
                     </svg>
                             </span>
@@ -1810,36 +1829,36 @@
                             <span class="piece " data-tooltip="Queen: 120/120 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_qbqzwpx" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_qbpsbd6" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_qbqzwpx" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_qbpsbd6" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_qbqzwpx" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_qbpsbd6" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_qbqzwpx)">
+                        <g filter="url(#shadow_qbpsbd6)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></ellipse>
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></ellipse>
-                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></path>
                         <!-- Coronet points -->
-                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="1"></path>
+                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="1"></path>
                         <!-- Coronet balls -->
-                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="0.8"></circle>
-                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="0.8"></circle>
-                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="0.8"></circle>
-                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="0.8"></circle>
-                        <circle cx="25" cy="9" r="2" fill="url(#grad_qbqzwpx)" stroke="#000" stroke-width="0.8"></circle>
+                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="0.8"></circle>
+                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="0.8"></circle>
+                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="0.8"></circle>
+                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="0.8"></circle>
+                        <circle cx="25" cy="9" r="2" fill="url(#grad_qbpsbd6)" stroke="#000" stroke-width="0.8"></circle>
                         <!-- Shine -->
-                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qbqzwpx)"></path>
+                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qbpsbd6)"></path>
                         </g>
                     </svg>
                             </span>
@@ -1854,41 +1873,41 @@
                             <span class="piece " data-tooltip="King: 250/250 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_kbx8uqt" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_kbe8xup" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_kbx8uqt" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_kbe8xup" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_kbx8uqt" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_kbe8xup" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_kbx8uqt)">
+                        <g filter="url(#shadow_kbe8xup)">
                         <!-- Base -->
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
                         <!-- Pedestal -->
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
                         <!-- Collar -->
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></ellipse>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Upper body -->
-                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
                         <!-- Crown rim -->
-                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
                         <!-- Crown notches -->
-                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></path>
                         <!-- Cross -->
-                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></rect>
-                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kbx8uqt)" stroke="#000" stroke-width="1"></rect>
+                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></rect>
+                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kbe8xup)" stroke="#000" stroke-width="1"></rect>
                         <!-- Shine overlay -->
-                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kbx8uqt)"></path>
-                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kbx8uqt)" opacity="0.4"></path>
+                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kbe8xup)"></path>
+                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kbe8xup)" opacity="0.4"></path>
                         </g>
                     </svg>
                             </span>
@@ -1903,34 +1922,34 @@
                             <span class="piece " data-tooltip="Bishop: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_bb5hq47" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_bb1oyfk" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_bb5hq47" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_bb1oyfk" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_bb5hq47" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_bb1oyfk" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_bb5hq47)">
+                        <g filter="url(#shadow_bb1oyfk)">
                         <ellipse cx="25" cy="44" rx="12" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></path>
-                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Mitre (head) -->
-                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></path>
                         <!-- Mitre slit -->
                         <path d="M23 24 L25 14 L27 24" fill="none" stroke="#000" stroke-width="1.2"></path>
                         <!-- Ball on top -->
-                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bb5hq47)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bb1oyfk)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine -->
-                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bb5hq47)" opacity="0.5"></path>
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bb1oyfk)" opacity="0.5"></path>
                         </g>
                     </svg>
                             </span>
@@ -1945,27 +1964,27 @@
                             <span class="piece " data-tooltip="Knight: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_nb0oswi" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_nby70rv" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_nb0oswi" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_nby70rv" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_nb0oswi" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_nby70rv" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_nb0oswi)">
+                        <g filter="url(#shadow_nby70rv)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nb0oswi)" stroke="#000" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nb0oswi)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nb0oswi)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nby70rv)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nby70rv)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nby70rv)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck & head -->
-                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nb0oswi)" stroke="#000" stroke-width="1"></path>
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nby70rv)" stroke="#000" stroke-width="1"></path>
                         <!-- Ear -->
-                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nb0oswi)" stroke="#000" stroke-width="0.8"></path>
+                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nby70rv)" stroke="#000" stroke-width="0.8"></path>
                         <!-- Eye -->
                         <circle cx="20" cy="14" r="2" fill="#888"></circle>
                         <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
@@ -1977,7 +1996,7 @@
                         <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#000" opacity="0.3"></path>
                         <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#000" opacity="0.2"></path>
                         <!-- Shine -->
-                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nb0oswi)" opacity="0.4"></path>
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nby70rv)" opacity="0.4"></path>
                         </g>
                     </svg>
                             </span>
@@ -1992,32 +2011,32 @@
                             <span class="piece " data-tooltip="Rook: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_rb1hjif" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_rb5o4bx" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_rb1hjif" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_rb5o4bx" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_rb1hjif" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_rb5o4bx" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_rb1hjif)">
+                        <g filter="url(#shadow_rb5o4bx)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Tower body -->
-                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></path>
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></path>
                         <!-- Top rim -->
-                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></path>
                         <!-- Battlements -->
-                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rb1hjif)" stroke="#000" stroke-width="1"></path>
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rb5o4bx)" stroke="#000" stroke-width="1"></path>
                         <!-- Shine -->
-                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rb1hjif)" opacity="0.5"></rect>
-                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rb1hjif)" opacity="0.3"></rect>
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rb5o4bx)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rb5o4bx)" opacity="0.3"></rect>
                         </g>
                     </svg>
                             </span>
@@ -2032,30 +2051,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pb0w4zd" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbo21xt" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pb0w4zd" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbo21xt" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pb0w4zd" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbo21xt" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pb0w4zd)">
+                        <g filter="url(#shadow_pbo21xt)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pb0w4zd)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbo21xt)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pb0w4zd)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbo21xt)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2070,30 +2089,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pbcwz2e" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pboyu6w" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pbcwz2e" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pboyu6w" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pbcwz2e" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pboyu6w" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pbcwz2e)">
+                        <g filter="url(#shadow_pboyu6w)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbcwz2e)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pboyu6w)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbcwz2e)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pboyu6w)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2108,30 +2127,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pbifr2u" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbmsdzi" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pbifr2u" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbmsdzi" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pbifr2u" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbmsdzi" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pbifr2u)">
+                        <g filter="url(#shadow_pbmsdzi)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbifr2u)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbmsdzi)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbifr2u)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbmsdzi)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2142,34 +2161,72 @@
                                 <div class="health-bar" style="width: 100%"></div>
                                 
                             </div>
-                        </div><div class="square light" data-row="1" data-col="3"></div><div class="square dark" data-row="1" data-col="4">
+                        </div><div class="square light" data-row="1" data-col="3">
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pb2tb7h" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbdvbzg" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pb2tb7h" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbdvbzg" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pb2tb7h" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbdvbzg" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pb2tb7h)">
+                        <g filter="url(#shadow_pbdvbzg)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pb2tb7h)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbdvbzg)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pb2tb7h)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbdvbzg)" opacity="0.5"></circle>
+                        </g>
+                    </svg>
+                            </span>
+                            <div class="ability-indicator">⚡</div>
+                            
+                            
+                            <div class="health-bar-container">
+                                <div class="health-bar" style="width: 100%"></div>
+                                
+                            </div>
+                        </div><div class="square dark" data-row="1" data-col="4">
+                            <span class="piece " data-tooltip="Pawn: 30/30 HP">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
+                        <defs>
+                    <lineargradient id="grad_pb9bzn8" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
+                    </lineargradient>
+                    <radialgradient id="shine_pb9bzn8" cx="0.35" cy="0.3" r="0.65">
+                        <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
+                        <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
+                    </radialgradient>
+                    <filter id="shadow_pb9bzn8" x="-10%" y="-10%" width="130%" height="130%">
+                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
+                    </filter>
+                    
+                </defs>
+                        <g filter="url(#shadow_pb9bzn8)">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></ellipse>
+                        <!-- Neck -->
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></ellipse>
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pb9bzn8)" stroke="#000" stroke-width="1"></circle>
+                        <!-- Shine on head -->
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pb9bzn8)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2184,30 +2241,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pboen6g" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbkgizk" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pboen6g" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbkgizk" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pboen6g" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbkgizk" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pboen6g)">
+                        <g filter="url(#shadow_pbkgizk)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pboen6g)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbkgizk)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pboen6g)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbkgizk)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2222,30 +2279,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pbvyeqx" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbbjipk" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pbvyeqx" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbbjipk" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pbvyeqx" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbbjipk" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pbvyeqx)">
+                        <g filter="url(#shadow_pbbjipk)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbvyeqx)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbbjipk)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbvyeqx)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbbjipk)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2260,68 +2317,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pbi0tf8" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pbnndhv" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pbi0tf8" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pbnndhv" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pbi0tf8" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pbnndhv" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pbi0tf8)">
+                        <g filter="url(#shadow_pbnndhv)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbi0tf8)" stroke="#000" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbnndhv)" stroke="#000" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbi0tf8)" opacity="0.5"></circle>
-                        </g>
-                    </svg>
-                            </span>
-                            
-                            
-                            
-                            <div class="health-bar-container">
-                                <div class="health-bar" style="width: 100%"></div>
-                                
-                            </div>
-                        </div><div class="square light" data-row="2" data-col="0"></div><div class="square dark" data-row="2" data-col="1"></div><div class="square light" data-row="2" data-col="2"></div><div class="square dark" data-row="2" data-col="3"></div><div class="square light" data-row="2" data-col="4"></div><div class="square dark" data-row="2" data-col="5"></div><div class="square light" data-row="2" data-col="6"></div><div class="square dark" data-row="2" data-col="7"></div><div class="square dark" data-row="3" data-col="0"></div><div class="square light" data-row="3" data-col="1"></div><div class="square dark" data-row="3" data-col="2"></div><div class="square light" data-row="3" data-col="3">
-                            <span class="piece " data-tooltip="Pawn: 30/30 HP">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
-                        <defs>
-                    <lineargradient id="grad_pbfage1" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#3a3a3a"></stop><stop offset="50%" stop-color="#252525"></stop><stop offset="100%" stop-color="#111"></stop>
-                    </lineargradient>
-                    <radialgradient id="shine_pbfage1" cx="0.35" cy="0.3" r="0.65">
-                        <stop offset="0%" stop-color="#555" stop-opacity="0.7"></stop>
-                        <stop offset="100%" stop-color="#252525" stop-opacity="0"></stop>
-                    </radialgradient>
-                    <filter id="shadow_pbfage1" x="-10%" y="-10%" width="130%" height="130%">
-                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
-                    </filter>
-                    
-                </defs>
-                        <g filter="url(#shadow_pbfage1)">
-                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#111" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></ellipse>
-                        <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></ellipse>
-                        <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pbfage1)" stroke="#000" stroke-width="1"></circle>
-                        <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbfage1)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pbnndhv)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2332,119 +2351,34 @@
                                 <div class="health-bar" style="width: 100%"></div>
                                 
                             </div>
-                        </div><div class="square dark" data-row="3" data-col="4"></div><div class="square light" data-row="3" data-col="5"></div><div class="square dark" data-row="3" data-col="6"></div><div class="square light" data-row="3" data-col="7"></div><div class="square light" data-row="4" data-col="0"></div><div class="square dark" data-row="4" data-col="1"></div><div class="square light" data-row="4" data-col="2"></div><div class="square dark" data-row="4" data-col="3">
+                        </div><div class="square light" data-row="2" data-col="0"></div><div class="square dark" data-row="2" data-col="1"></div><div class="square light" data-row="2" data-col="2"></div><div class="square dark" data-row="2" data-col="3"></div><div class="square light" data-row="2" data-col="4"></div><div class="square dark" data-row="2" data-col="5"></div><div class="square light" data-row="2" data-col="6"></div><div class="square dark" data-row="2" data-col="7"></div><div class="square dark" data-row="3" data-col="0"></div><div class="square light" data-row="3" data-col="1"></div><div class="square dark" data-row="3" data-col="2"></div><div class="square light" data-row="3" data-col="3"></div><div class="square dark" data-row="3" data-col="4"></div><div class="square light" data-row="3" data-col="5"></div><div class="square dark" data-row="3" data-col="6"></div><div class="square light" data-row="3" data-col="7"></div><div class="square light" data-row="4" data-col="0"></div><div class="square dark" data-row="4" data-col="1"></div><div class="square light" data-row="4" data-col="2"></div><div class="square dark" data-row="4" data-col="3"></div><div class="square light" data-row="4" data-col="4"></div><div class="square dark" data-row="4" data-col="5"></div><div class="square light" data-row="4" data-col="6"></div><div class="square dark" data-row="4" data-col="7"></div><div class="square dark" data-row="5" data-col="0"></div><div class="square light" data-row="5" data-col="1"></div><div class="square dark" data-row="5" data-col="2"></div><div class="square light" data-row="5" data-col="3"></div><div class="square dark" data-row="5" data-col="4"></div><div class="square light" data-row="5" data-col="5"></div><div class="square dark" data-row="5" data-col="6"></div><div class="square light" data-row="5" data-col="7"></div><div class="square light" data-row="6" data-col="0">
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pwhd7ed" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwlqg4s" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pwhd7ed" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwlqg4s" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pwhd7ed" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwlqg4s" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pwhd7ed)">
+                        <g filter="url(#shadow_pwlqg4s)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwhd7ed)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwlqg4s)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwhd7ed)" opacity="0.5"></circle>
-                        </g>
-                    </svg>
-                            </span>
-                            <div class="ability-indicator">⚡</div>
-                            
-                            
-                            <div class="health-bar-container">
-                                <div class="health-bar" style="width: 100%"></div>
-                                
-                            </div>
-                        </div><div class="square light" data-row="4" data-col="4"></div><div class="square dark" data-row="4" data-col="5"></div><div class="square light" data-row="4" data-col="6"></div><div class="square dark" data-row="4" data-col="7"></div><div class="square dark" data-row="5" data-col="0"></div><div class="square light" data-row="5" data-col="1"></div><div class="square dark" data-row="5" data-col="2"></div><div class="square light" data-row="5" data-col="3"></div><div class="square dark" data-row="5" data-col="4"></div><div class="square light" data-row="5" data-col="5">
-                            <span class="piece " data-tooltip="Knight: 75/75 HP">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
-                        <defs>
-                    <lineargradient id="grad_nwk0055" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
-                    </lineargradient>
-                    <radialgradient id="shine_nwk0055" cx="0.35" cy="0.3" r="0.65">
-                        <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
-                        <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
-                    </radialgradient>
-                    <filter id="shadow_nwk0055" x="-10%" y="-10%" width="130%" height="130%">
-                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
-                    </filter>
-                    
-                </defs>
-                        <g filter="url(#shadow_nwk0055)">
-                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwk0055)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwk0055)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwk0055)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <!-- Neck & head -->
-                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwk0055)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <!-- Ear -->
-                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwk0055)" stroke="#7a6a4a" stroke-width="0.8"></path>
-                        <!-- Eye -->
-                        <circle cx="20" cy="14" r="2" fill="#4a3a2a"></circle>
-                        <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
-                        <!-- Nostril -->
-                        <circle cx="14" cy="18" r="1.2" fill="#8a7a5a"></circle>
-                        <!-- Mouth line -->
-                        <path d="M13 20 Q16 22 18 20" fill="none" stroke="#8a7a5a" stroke-width="0.8"></path>
-                        <!-- Mane -->
-                        <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#8a7a5a" opacity="0.3"></path>
-                        <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#8a7a5a" opacity="0.2"></path>
-                        <!-- Shine -->
-                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwk0055)" opacity="0.4"></path>
-                        </g>
-                    </svg>
-                            </span>
-                            <div class="ability-indicator">⚡</div>
-                            
-                            
-                            <div class="health-bar-container">
-                                <div class="health-bar" style="width: 100%"></div>
-                                
-                            </div>
-                        </div><div class="square dark" data-row="5" data-col="6"></div><div class="square light" data-row="5" data-col="7"></div><div class="square light" data-row="6" data-col="0">
-                            <span class="piece " data-tooltip="Pawn: 30/30 HP">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
-                        <defs>
-                    <lineargradient id="grad_pwqjqpx" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
-                    </lineargradient>
-                    <radialgradient id="shine_pwqjqpx" cx="0.35" cy="0.3" r="0.65">
-                        <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
-                        <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
-                    </radialgradient>
-                    <filter id="shadow_pwqjqpx" x="-10%" y="-10%" width="130%" height="130%">
-                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
-                    </filter>
-                    
-                </defs>
-                        <g filter="url(#shadow_pwqjqpx)">
-                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwqjqpx)" stroke="#7a6a4a" stroke-width="1"></circle>
-                        <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwqjqpx)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwlqg4s)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2459,30 +2393,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pw2i8j4" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwf6u1t" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pw2i8j4" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwf6u1t" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pw2i8j4" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwf6u1t" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pw2i8j4)">
+                        <g filter="url(#shadow_pwf6u1t)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw2i8j4)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwf6u1t)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw2i8j4)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwf6u1t)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2497,30 +2431,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pw8cnyg" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwpm6bc" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pw8cnyg" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwpm6bc" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pw8cnyg" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwpm6bc" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pw8cnyg)">
+                        <g filter="url(#shadow_pwpm6bc)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw8cnyg)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwpm6bc)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw8cnyg)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwpm6bc)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2531,34 +2465,72 @@
                                 <div class="health-bar" style="width: 100%"></div>
                                 
                             </div>
-                        </div><div class="square dark" data-row="6" data-col="3"></div><div class="square light" data-row="6" data-col="4">
+                        </div><div class="square dark" data-row="6" data-col="3">
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pwy47bg" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwafsvb" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pwy47bg" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwafsvb" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pwy47bg" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwafsvb" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pwy47bg)">
+                        <g filter="url(#shadow_pwafsvb)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwy47bg)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwafsvb)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwy47bg)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwafsvb)" opacity="0.5"></circle>
+                        </g>
+                    </svg>
+                            </span>
+                            <div class="ability-indicator">⚡</div>
+                            
+                            
+                            <div class="health-bar-container">
+                                <div class="health-bar" style="width: 100%"></div>
+                                
+                            </div>
+                        </div><div class="square light" data-row="6" data-col="4">
+                            <span class="piece " data-tooltip="Pawn: 30/30 HP">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
+                        <defs>
+                    <lineargradient id="grad_pwmc68i" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
+                    </lineargradient>
+                    <radialgradient id="shine_pwmc68i" cx="0.35" cy="0.3" r="0.65">
+                        <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
+                        <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
+                    </radialgradient>
+                    <filter id="shadow_pwmc68i" x="-10%" y="-10%" width="130%" height="130%">
+                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
+                    </filter>
+                    
+                </defs>
+                        <g filter="url(#shadow_pwmc68i)">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <!-- Neck -->
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwmc68i)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <!-- Shine on head -->
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwmc68i)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2573,30 +2545,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pw7hgf6" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pw5794a" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pw7hgf6" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pw5794a" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pw7hgf6" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pw5794a" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pw7hgf6)">
+                        <g filter="url(#shadow_pw5794a)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw7hgf6)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw5794a)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw7hgf6)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw5794a)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2611,30 +2583,30 @@
                             <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pwtrk91" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pwvwuw6" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pwtrk91" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pwvwuw6" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pwtrk91" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pwvwuw6" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pwtrk91)">
+                        <g filter="url(#shadow_pwvwuw6)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwtrk91)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pwvwuw6)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwtrk91)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pwvwuw6)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2646,33 +2618,33 @@
                                 
                             </div>
                         </div><div class="square dark" data-row="6" data-col="7">
-                            <span class="piece " data-tooltip="Pawn: 10/30 HP">
+                            <span class="piece " data-tooltip="Pawn: 30/30 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_pw1v4vy" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_pw3koik" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_pw1v4vy" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_pw3koik" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_pw1v4vy" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_pw3koik" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_pw1v4vy)">
+                        <g filter="url(#shadow_pw3koik)">
                         <ellipse cx="25" cy="44" rx="11" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck -->
-                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Head -->
-                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw1v4vy)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="20" r="7.5" fill="url(#grad_pw3koik)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine on head -->
-                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw1v4vy)" opacity="0.5"></circle>
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_pw3koik)" opacity="0.5"></circle>
                         </g>
                     </svg>
                             </span>
@@ -2680,39 +2652,39 @@
                             
                             
                             <div class="health-bar-container">
-                                <div class="health-bar" style="width: 33.33333333333333%"></div>
+                                <div class="health-bar" style="width: 100%"></div>
                                 
                             </div>
                         </div><div class="square dark" data-row="7" data-col="0">
                             <span class="piece " data-tooltip="Rook: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_rwzy1ye" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_rwic82i" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_rwzy1ye" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_rwic82i" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_rwzy1ye" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_rwic82i" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_rwzy1ye)">
+                        <g filter="url(#shadow_rwic82i)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Tower body -->
-                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Top rim -->
-                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Battlements -->
-                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwzy1ye)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwic82i)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Shine -->
-                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwzy1ye)" opacity="0.5"></rect>
-                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwzy1ye)" opacity="0.3"></rect>
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwic82i)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwic82i)" opacity="0.3"></rect>
                         </g>
                     </svg>
                             </span>
@@ -2727,27 +2699,27 @@
                             <span class="piece " data-tooltip="Knight: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_nwqicc8" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_nwnq8dl" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_nwqicc8" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_nwnq8dl" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_nwqicc8" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_nwnq8dl" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_nwqicc8)">
+                        <g filter="url(#shadow_nwnq8dl)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwqicc8)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwqicc8)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwqicc8)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwnq8dl)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwnq8dl)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwnq8dl)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Neck & head -->
-                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwqicc8)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwnq8dl)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Ear -->
-                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwqicc8)" stroke="#7a6a4a" stroke-width="0.8"></path>
+                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwnq8dl)" stroke="#7a6a4a" stroke-width="0.8"></path>
                         <!-- Eye -->
                         <circle cx="20" cy="14" r="2" fill="#4a3a2a"></circle>
                         <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
@@ -2759,7 +2731,7 @@
                         <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#8a7a5a" opacity="0.3"></path>
                         <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#8a7a5a" opacity="0.2"></path>
                         <!-- Shine -->
-                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwqicc8)" opacity="0.4"></path>
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwnq8dl)" opacity="0.4"></path>
                         </g>
                     </svg>
                             </span>
@@ -2774,34 +2746,34 @@
                             <span class="piece " data-tooltip="Bishop: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_bw8pch4" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_bwxzbkj" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_bw8pch4" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_bwxzbkj" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_bw8pch4" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_bwxzbkj" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_bw8pch4)">
+                        <g filter="url(#shadow_bwxzbkj)">
                         <ellipse cx="25" cy="44" rx="12" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Mitre (head) -->
-                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Mitre slit -->
                         <path d="M23 24 L25 14 L27 24" fill="none" stroke="#7a6a4a" stroke-width="1.2"></path>
                         <!-- Ball on top -->
-                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bw8pch4)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bwxzbkj)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine -->
-                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bw8pch4)" opacity="0.5"></path>
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bwxzbkj)" opacity="0.5"></path>
                         </g>
                     </svg>
                             </span>
@@ -2816,36 +2788,36 @@
                             <span class="piece " data-tooltip="Queen: 120/120 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_qwcln8x" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_qwan34d" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_qwcln8x" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_qwan34d" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_qwcln8x" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_qwan34d" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_qwcln8x)">
+                        <g filter="url(#shadow_qwan34d)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Coronet points -->
-                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Coronet balls -->
-                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="0.8"></circle>
-                        <circle cx="25" cy="9" r="2" fill="url(#grad_qwcln8x)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="15" cy="5.5" r="1.8" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="22" cy="3.5" r="1.8" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="28" cy="3.5" r="1.8" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="35" cy="5.5" r="1.8" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
+                        <circle cx="25" cy="9" r="2" fill="url(#grad_qwan34d)" stroke="#7a6a4a" stroke-width="0.8"></circle>
                         <!-- Shine -->
-                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qwcln8x)"></path>
+                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_qwan34d)"></path>
                         </g>
                     </svg>
                             </span>
@@ -2860,41 +2832,41 @@
                             <span class="piece " data-tooltip="King: 250/250 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_kwhb95s" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_kw3trf0" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_kwhb95s" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_kw3trf0" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_kwhb95s" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_kw3trf0" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_kwhb95s)">
+                        <g filter="url(#shadow_kw3trf0)">
                         <!-- Base -->
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Pedestal -->
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Collar -->
-                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Upper body -->
-                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Crown rim -->
-                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Crown notches -->
-                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Cross -->
-                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></rect>
-                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kwhb95s)" stroke="#7a6a4a" stroke-width="1"></rect>
+                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></rect>
+                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="url(#grad_kw3trf0)" stroke="#7a6a4a" stroke-width="1"></rect>
                         <!-- Shine overlay -->
-                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kwhb95s)"></path>
-                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kwhb95s)" opacity="0.4"></path>
+                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_kw3trf0)"></path>
+                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_kw3trf0)" opacity="0.4"></path>
                         </g>
                     </svg>
                             </span>
@@ -2909,34 +2881,34 @@
                             <span class="piece " data-tooltip="Bishop: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_bw8jrdf" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_bweu1gj" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_bw8jrdf" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_bweu1gj" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_bw8jrdf" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_bweu1gj" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_bw8jrdf)">
+                        <g filter="url(#shadow_bweu1gj)">
                         <ellipse cx="25" cy="44" rx="12" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Shaft -->
-                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></ellipse>
                         <!-- Mitre (head) -->
-                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></path>
                         <!-- Mitre slit -->
                         <path d="M23 24 L25 14 L27 24" fill="none" stroke="#7a6a4a" stroke-width="1.2"></path>
                         <!-- Ball on top -->
-                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bw8jrdf)" stroke="#7a6a4a" stroke-width="1"></circle>
+                        <circle cx="25" cy="7" r="2.5" fill="url(#grad_bweu1gj)" stroke="#7a6a4a" stroke-width="1"></circle>
                         <!-- Shine -->
-                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bw8jrdf)" opacity="0.5"></path>
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_bweu1gj)" opacity="0.5"></path>
                         </g>
                     </svg>
                             </span>
@@ -2947,36 +2919,83 @@
                                 <div class="health-bar" style="width: 100%"></div>
                                 
                             </div>
-                        </div><div class="square dark" data-row="7" data-col="6"></div><div class="square light" data-row="7" data-col="7">
-                            <span class="piece " data-tooltip="Rook: 75/75 HP">
+                        </div><div class="square dark" data-row="7" data-col="6">
+                            <span class="piece " data-tooltip="Knight: 75/75 HP">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
                         <defs>
-                    <lineargradient id="grad_rwcaee1" x1="0" y1="0" x2="1" y2="1">
+                    <lineargradient id="grad_nwi977s" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
                     </lineargradient>
-                    <radialgradient id="shine_rwcaee1" cx="0.35" cy="0.3" r="0.65">
+                    <radialgradient id="shine_nwi977s" cx="0.35" cy="0.3" r="0.65">
                         <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
                         <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
                     </radialgradient>
-                    <filter id="shadow_rwcaee1" x="-10%" y="-10%" width="130%" height="130%">
+                    <filter id="shadow_nwi977s" x="-10%" y="-10%" width="130%" height="130%">
                         <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
                     </filter>
                     
                 </defs>
-                        <g filter="url(#shadow_rwcaee1)">
+                        <g filter="url(#shadow_nwi977s)">
                         <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
-                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></ellipse>
-                        <!-- Tower body -->
-                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <!-- Top rim -->
-                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></path>
-                        <!-- Battlements -->
-                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwcaee1)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_nwi977s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_nwi977s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_nwi977s)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <!-- Neck & head -->
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="url(#grad_nwi977s)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <!-- Ear -->
+                        <path d="M22 8 L20 3 L24 6" fill="url(#grad_nwi977s)" stroke="#7a6a4a" stroke-width="0.8"></path>
+                        <!-- Eye -->
+                        <circle cx="20" cy="14" r="2" fill="#4a3a2a"></circle>
+                        <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"></circle>
+                        <!-- Nostril -->
+                        <circle cx="14" cy="18" r="1.2" fill="#8a7a5a"></circle>
+                        <!-- Mouth line -->
+                        <path d="M13 20 Q16 22 18 20" fill="none" stroke="#8a7a5a" stroke-width="0.8"></path>
+                        <!-- Mane -->
+                        <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="#8a7a5a" opacity="0.3"></path>
+                        <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="#8a7a5a" opacity="0.2"></path>
                         <!-- Shine -->
-                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwcaee1)" opacity="0.5"></rect>
-                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwcaee1)" opacity="0.3"></rect>
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_nwi977s)" opacity="0.4"></path>
+                        </g>
+                    </svg>
+                            </span>
+                            <div class="ability-indicator">⚡</div>
+                            
+                            
+                            <div class="health-bar-container">
+                                <div class="health-bar" style="width: 100%"></div>
+                                
+                            </div>
+                        </div><div class="square light" data-row="7" data-col="7">
+                            <span class="piece " data-tooltip="Rook: 75/75 HP">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">
+                        <defs>
+                    <lineargradient id="grad_rwx3wro" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#f5f0e8"></stop><stop offset="50%" stop-color="#d4c9b0"></stop><stop offset="100%" stop-color="#a89878"></stop>
+                    </lineargradient>
+                    <radialgradient id="shine_rwx3wro" cx="0.35" cy="0.3" r="0.65">
+                        <stop offset="0%" stop-color="#fffef5" stop-opacity="0.7"></stop>
+                        <stop offset="100%" stop-color="#d4c9b0" stop-opacity="0"></stop>
+                    </radialgradient>
+                    <filter id="shadow_rwx3wro" x="-10%" y="-10%" width="130%" height="130%">
+                        <fedropshadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"></fedropshadow>
+                    </filter>
+                    
+                </defs>
+                        <g filter="url(#shadow_rwx3wro)">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="#a89878" opacity="0.5"></ellipse>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></ellipse>
+                        <!-- Tower body -->
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <!-- Top rim -->
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <!-- Battlements -->
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="url(#grad_rwx3wro)" stroke="#7a6a4a" stroke-width="1"></path>
+                        <!-- Shine -->
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_rwx3wro)" opacity="0.5"></rect>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_rwx3wro)" opacity="0.3"></rect>
                         </g>
                     </svg>
                             </span>

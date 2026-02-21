@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: #302921;
             min-height: 100vh;
             padding: 10px;
             overflow-x: hidden;
@@ -49,51 +49,49 @@
 
         h1 {
             text-align: center;
-            color: #fff;
-            font-size: 2.5em;
+            color: #f0d9b5;
+            font-size: 2.2em;
             margin: 10px 0;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            animation: glow 2s ease-in-out infinite alternate;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
-            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            from { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+            to { text-shadow: 0 2px 8px rgba(240,217,181,0.4); }
         }
 
         .battle-title {
             text-align: center;
-            color: #ff6b6b;
-            font-size: 1.5em;
+            color: #b58863;
+            font-size: 1.2em;
             margin-bottom: 10px;
             font-weight: bold;
-            text-shadow: 0 0 15px #ff6b6b;
-            animation: battleGlow 1s ease-in-out infinite alternate;
+            letter-spacing: 0.08em;
         }
 
         @keyframes battleGlow {
-            from { text-shadow: 0 0 15px #ff6b6b; }
-            to { text-shadow: 0 0 25px #ff6b6b, 0 0 35px #ff3333; }
+            from { opacity: 1; }
+            to { opacity: 0.85; }
         }
 
 
         .turn-display {
-            font-size: 1.8em;
+            font-size: 1.4em;
             font-weight: bold;
             text-align: center;
-            color: #ffd700;
-            text-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
-            border-radius: 15px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            animation: turnGlow 2s ease-in-out infinite;
+            color: #f0d9b5;
+            padding: 10px 15px;
+            margin-bottom: 12px;
+            background: #272522;
+            border-radius: 6px;
+            border: 1px solid #403d39;
+            letter-spacing: 0.03em;
         }
 
         @keyframes turnGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+            0%, 100% { box-shadow: 0 0 6px rgba(240, 217, 181, 0.2); }
+            50% { box-shadow: 0 0 12px rgba(240, 217, 181, 0.4); }
         }
 
         .online-lobby-overlay {
@@ -103,11 +101,11 @@
         }
         .online-lobby-overlay.hidden { display: none; }
         .online-lobby {
-            background: linear-gradient(135deg, #1a1a3e, #2a2a5e);
-            border: 2px solid #ffd700; border-radius: 20px;
+            background: #272522;
+            border: 2px solid #403d39; border-radius: 10px;
             padding: 30px; text-align: center; max-width: 420px; width: 90%;
         }
-        .online-lobby h2 { color: #ffd700; margin-bottom: 20px; font-size: 1.5em; }
+        .online-lobby h2 { color: #f0d9b5; margin-bottom: 20px; font-size: 1.5em; }
         .online-lobby .lobby-status {
             padding: 8px 16px; border-radius: 20px; font-size: 13px;
             font-weight: bold; display: inline-block; margin-bottom: 20px;
@@ -153,10 +151,9 @@
             align-items: center;
             padding: 10px;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(33, 150, 243, 0.2));
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            background: #272522;
+            border-radius: 8px;
+            border: 1px solid #403d39;
         }
 
         .score-section {
@@ -176,17 +173,16 @@
         .score-value {
             font-size: 1.5em;
             font-weight: bold;
-            color: #ffd700;
-            text-shadow: 0 0 10px #ffd700;
+            color: #b58863;
+            text-shadow: none;
         }
 
         .board-container {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            padding: 15px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: #272522;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #403d39;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             margin-bottom: 15px;
             position: relative;
             width: 100%;
@@ -199,14 +195,14 @@
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
-            gap: 2px;
+            gap: 0;
             width: 90vw;
             max-width: 500px;
             height: 90vw;
             max-height: 500px;
             margin: 0 auto;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            border: 4px solid #403d39;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
         }
@@ -223,44 +219,62 @@
         }
 
         .square.light {
-            background: linear-gradient(135deg, #e8e8ff 0%, #d0d0ff 100%);
+            background: #eeeed2;
         }
 
         .square.dark {
-            background: linear-gradient(135deg, #4a4a7a 0%, #35355a 100%);
+            background: #769656;
         }
 
         .square.selected {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important;
-            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.8);
+            background: #f6f669 !important;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
             animation: pulse 0.8s ease-in-out infinite;
         }
 
         .square.legal-move {
-            background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%) !important;
+            background: inherit;
         }
 
-        .square.legal-move::after {
+        .square.light.legal-move::after {
             content: '';
             position: absolute;
-            width: 30%;
-            height: 30%;
-            background: rgba(0, 255, 136, 0.5);
+            width: 32%;
+            height: 32%;
+            background: rgba(0, 0, 0, 0.18);
             border-radius: 50%;
         }
 
+        .square.dark.legal-move::after {
+            content: '';
+            position: absolute;
+            width: 32%;
+            height: 32%;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 50%;
+        }
+
+        .square.legal-move.has-piece::after {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border-radius: 50%;
+            border: 4px solid rgba(0,0,0,0.22);
+            box-sizing: border-box;
+        }
+
         .square.ability-target {
-            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+            background: rgba(220, 50, 50, 0.7) !important;
             animation: targetPulse 0.5s ease-in-out infinite;
         }
 
         @keyframes targetPulse {
-            0%, 100% { box-shadow: inset 0 0 20px rgba(255, 68, 68, 0.8); }
-            50% { box-shadow: inset 0 0 30px rgba(255, 68, 68, 1); }
+            0%, 100% { box-shadow: inset 0 0 12px rgba(220, 50, 50, 0.9); }
+            50% { box-shadow: inset 0 0 20px rgba(220, 50, 50, 1); }
         }
 
         .square.in-check {
-            background: linear-gradient(135deg, #ff0044 0%, #cc0033 100%) !important;
+            background: radial-gradient(circle, #ff3333 0%, #cc0000 70%, transparent 100%) !important;
             animation: checkPulse 0.5s ease-in-out infinite;
         }
 
@@ -484,13 +498,15 @@
         }
 
         .reset-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
+            background: #8b4513;
+            color: #f0d9b5;
+            border: 1px solid #a0522d;
         }
 
         .new-game-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            background: #5c8c3a;
+            color: #fff;
+            border: 1px solid #6aab44;
         }
 
         button:hover {
@@ -611,7 +627,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: #302921;
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -624,21 +640,22 @@
         }
 
         .mode-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #272522;
             padding: 40px;
-            border-radius: 20px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            border: 2px solid #403d39;
             max-width: 90%;
             max-height: 90vh;
             overflow-y: auto;
             text-align: center;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
         }
 
         .mode-content h2 {
-            color: #fff;
-            font-size: 2.5em;
+            color: #f0d9b5;
+            font-size: 2em;
             margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.06em;
         }
 
         .mode-buttons {
@@ -648,27 +665,29 @@
         }
 
         .mode-button {
-            padding: 20px;
-            font-size: 1.3em;
+            padding: 18px;
+            font-size: 1.2em;
             font-weight: 600;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
+            border: 2px solid #403d39;
+            border-radius: 8px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
+            background: #302921;
             color: white;
             transition: all 0.3s ease;
         }
 
         .mode-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-            border-color: #ffd700;
+            background: #3d3532;
+            transform: scale(1.02);
+            border-color: #b58863;
+            color: #f0d9b5;
         }
 
         .mode-button.selected {
-            background: rgba(255, 215, 0, 0.3);
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: #5c8c3a;
+            border-color: #6aab44;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(92, 140, 58, 0.4);
         }
 
         #ai-difficulty-section {
@@ -755,16 +774,16 @@
 
         #start-game-btn {
             display: none;
-            padding: 18px 40px;
-            font-size: 1.3em;
+            padding: 16px 40px;
+            font-size: 1.2em;
             font-weight: 600;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: #5c8c3a;
             color: white;
-            border: none;
-            border-radius: 15px;
+            border: 1px solid #6aab44;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(92, 140, 58, 0.4);
             margin-top: 10px;
         }
 
@@ -774,23 +793,22 @@
         }
 
         .piece-reference-guide {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            background: #272522;
             padding: 15px;
-            border-radius: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid #403d39;
             width: 340px;
             flex-shrink: 0;
             order: -1;
         }
 
         .piece-reference-guide h3 {
-            color: #ffd700;
+            color: #b58863;
             text-align: center;
             margin-bottom: 12px;
             font-size: 0.95em;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
             line-height: 1.3;
+            letter-spacing: 0.04em;
         }
 
         .piece-reference-grid {
@@ -800,24 +818,24 @@
         }
 
         .piece-ref-item {
-            background: rgba(255, 255, 255, 0.08);
+            background: #302921;
             padding: 8px 6px;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            border: 1px solid #403d39;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: default;
         }
 
         .piece-ref-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: #3d3532;
+            border-color: #b58863;
         }
 
         .piece-ref-item.highlighted {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            background: rgba(181, 136, 99, 0.2);
+            border-color: #b58863;
+            box-shadow: 0 0 8px rgba(181, 136, 99, 0.4);
         }
 
         .piece-ref-icon {
@@ -827,35 +845,36 @@
         }
 
         .piece-ref-name {
-            color: #fff;
+            color: #f0d9b5;
             font-weight: bold;
             font-size: 0.85em;
             margin-bottom: 2px;
         }
 
         .piece-ref-hp {
-            color: #4CAF50;
+            color: #6aab44;
             font-size: 0.75em;
             margin-bottom: 4px;
         }
 
         .piece-ref-ability {
-            color: #ffeb3b;
+            color: #b58863;
             font-size: 0.72em;
             margin-top: 4px;
             padding-top: 4px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #403d39;
         }
 
         .piece-ref-ability-name {
             font-weight: bold;
             margin-bottom: 2px;
+            color: #f0d9b5;
         }
 
         .piece-ref-ability-desc {
             font-size: 0.68em;
             line-height: 1.2;
-            color: rgba(255, 235, 59, 0.8);
+            color: #b58863;
         }
 
         @media (max-width: 900px) {
@@ -1978,169 +1997,429 @@
 
     <script>
         // Piece definitions
-        // ====== SVG PIECE SYSTEM (consistent across all platforms) ======
+        // ====== SVG PIECE SYSTEM (realistic 3D pieces with gradients & shading) ======
         function getPieceSVG(type, isWhite) {
-            const fill = isWhite ? '#fff' : '#222';
-            const stroke = isWhite ? '#333' : '#000';
+            const id = type + (isWhite ? 'w' : 'b') + Math.random().toString(36).substr(2, 5);
+            // Color palettes for realistic look
+            const mainFill = isWhite ? `url(#grad_${id})` : `url(#grad_${id})`;
+            const baseLight = isWhite ? '#f5f0e8' : '#3a3a3a';
+            const baseMid = isWhite ? '#d4c9b0' : '#252525';
+            const baseDark = isWhite ? '#a89878' : '#111';
+            const highlight = isWhite ? '#fffef5' : '#555';
+            const shadow = isWhite ? '#8a7a5a' : '#000';
+            const stroke = isWhite ? '#7a6a4a' : '#000';
+            const strokeW = '1';
+
+            function defs(stops, extra='') {
+                return `<defs>
+                    <linearGradient id="grad_${id}" x1="0" y1="0" x2="1" y2="1">
+                        ${stops}
+                    </linearGradient>
+                    <radialGradient id="shine_${id}" cx="0.35" cy="0.3" r="0.65">
+                        <stop offset="0%" stop-color="${highlight}" stop-opacity="0.7"/>
+                        <stop offset="100%" stop-color="${baseMid}" stop-opacity="0"/>
+                    </radialGradient>
+                    <filter id="shadow_${id}" x="-10%" y="-10%" width="130%" height="130%">
+                        <feDropShadow dx="1" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.4"/>
+                    </filter>
+                    ${extra}
+                </defs>`;
+            }
+
+            const stdStops = `<stop offset="0%" stop-color="${baseLight}"/><stop offset="50%" stop-color="${baseMid}"/><stop offset="100%" stop-color="${baseDark}"/>`;
             let paths = '';
 
             switch(type) {
-                case 'k': // King
+                case 'k': // King — realistic Staunton style
                     paths = `
-                        <rect x="15" y="42" width="20" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M13 42 L15 32 L35 32 L37 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M16 32 L18 22 L32 22 L34 32 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M20 22 L20 14 L17 14 L25 6 L33 14 L30 14 L30 22 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <line x1="25" y1="4" x2="25" y2="12" stroke="${stroke}" stroke-width="2"/>
-                        <line x1="21" y1="8" x2="29" y2="8" stroke="${stroke}" stroke-width="2"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <!-- Base -->
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Pedestal -->
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shaft -->
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Collar -->
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Upper body -->
+                        <path d="M18 24 Q17 18 19 14 L31 14 Q33 18 32 24 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Crown rim -->
+                        <path d="M19 14 L19 11 L31 11 L31 14 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Crown notches -->
+                        <path d="M19 11 L19 8 L22 10 L25 7 L28 10 L31 8 L31 11 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Cross -->
+                        <rect x="23.5" y="2" width="3" height="8" rx="0.8" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <rect x="21" y="4" width="8" height="3" rx="0.8" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shine overlay -->
+                        <path d="M19 14 Q17 18 18 24 L22 24 Q21 18 22 14 Z" fill="url(#shine_${id})"/>
+                        <path d="M19 36 L20 26 L23 26 L22 36 Z" fill="url(#shine_${id})" opacity="0.4"/>
+                        </g>
                     `;
                     break;
-                case 'q': // Queen
+                case 'q': // Queen — Staunton style with coronet
                     paths = `
-                        <rect x="15" y="42" width="20" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M13 42 L15 32 L35 32 L37 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M15 32 L12 12 L20 22 L25 8 L30 22 L38 12 L35 32 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="12" cy="10" r="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="25" cy="6" r="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="38" cy="10" r="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M18 36 L19 24 L31 24 L32 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="24" rx="7" ry="2" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M18 24 Q16 18 18 13 L32 13 Q34 18 32 24 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Coronet points -->
+                        <path d="M18 13 L15 6 L19 10 L22 4 L25 10 L28 4 L31 10 L35 6 L32 13 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Coronet balls -->
+                        <circle cx="15" cy="5.5" r="1.8" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <circle cx="22" cy="3.5" r="1.8" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <circle cx="28" cy="3.5" r="1.8" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <circle cx="35" cy="5.5" r="1.8" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <circle cx="25" cy="9" r="2" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <!-- Shine -->
+                        <path d="M18 13 Q16 18 18 24 L22 24 Q20 18 21 13 Z" fill="url(#shine_${id})"/>
+                        </g>
                     `;
                     break;
-                case 'r': // Rook
+                case 'r': // Rook — castle tower with battlements
                     paths = `
-                        <rect x="13" y="42" width="24" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M15 42 L15 18 L35 18 L35 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <rect x="15" y="8" width="4" height="10" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <rect x="23" y="8" width="4" height="10" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <rect x="31" y="8" width="4" height="10" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <rect x="13" y="16" width="24" height="4" fill="${fill}" stroke="${stroke}" stroke-width="1"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Tower body -->
+                        <path d="M17 36 L17 16 L33 16 L33 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Top rim -->
+                        <path d="M15 16 L15 13 L35 13 L35 16 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Battlements -->
+                        <path d="M15 13 L15 8 L19 8 L19 11 L22 11 L22 8 L28 8 L28 11 L31 11 L31 8 L35 8 L35 13 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shine -->
+                        <rect x="18" y="16" width="5" height="20" fill="url(#shine_${id})" opacity="0.5"/>
+                        <rect x="16" y="8" width="4" height="5" fill="url(#shine_${id})" opacity="0.3"/>
+                        </g>
                     `;
                     break;
-                case 'b': // Bishop
+                case 'b': // Bishop — with mitre and slit
                     paths = `
-                        <rect x="16" y="42" width="18" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M15 42 L18 34 L32 34 L35 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <ellipse cx="25" cy="34" rx="8" ry="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M19 34 Q25 10 31 34" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="25" cy="12" r="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <line x1="22" y1="26" x2="28" y2="22" stroke="${stroke}" stroke-width="1.5"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="12" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M13 43 Q13 46 25 46 Q37 46 37 43 Q37 40 25 40 Q13 40 13 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M15 40 L17 36 L33 36 L35 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="9" ry="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shaft -->
+                        <path d="M19 36 L20 28 L30 28 L31 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="28" rx="6" ry="2" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Mitre (head) -->
+                        <path d="M19 28 Q18 20 25 8 Q32 20 31 28 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Mitre slit -->
+                        <path d="M23 24 L25 14 L27 24" fill="none" stroke="${stroke}" stroke-width="1.2"/>
+                        <!-- Ball on top -->
+                        <circle cx="25" cy="7" r="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shine -->
+                        <path d="M21 28 Q20 20 25 10 L23 10 Q19 20 20 28 Z" fill="url(#shine_${id})" opacity="0.5"/>
+                        </g>
                     `;
                     break;
-                case 'n': // Knight
+                case 'n': // Knight — horse head profile
                     paths = `
-                        <rect x="13" y="42" width="24" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M15 42 L17 32 L33 32 L35 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M17 32 L17 22 L14 18 L14 12 L20 8 L24 8 L28 12 L33 12 L35 16 L33 22 L33 32 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="20" cy="16" r="1.5" fill="${stroke}"/>
-                        <path d="M14 12 L18 14" stroke="${stroke}" stroke-width="1" fill="none"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M14 40 L16 36 L34 36 L36 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="10" ry="2.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Neck & head -->
+                        <path d="M19 36 L17 26 L15 22 L13 14 L16 10 L20 7 L24 6 L26 8 L30 8 L33 12 L34 18 L34 22 L32 28 L31 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Ear -->
+                        <path d="M22 8 L20 3 L24 6" fill="${mainFill}" stroke="${stroke}" stroke-width="0.8"/>
+                        <!-- Eye -->
+                        <circle cx="20" cy="14" r="2" fill="${isWhite ? '#4a3a2a' : '#888'}"/>
+                        <circle cx="19.5" cy="13.5" r="0.8" fill="#fff"/>
+                        <!-- Nostril -->
+                        <circle cx="14" cy="18" r="1.2" fill="${shadow}"/>
+                        <!-- Mouth line -->
+                        <path d="M13 20 Q16 22 18 20" fill="none" stroke="${shadow}" stroke-width="0.8"/>
+                        <!-- Mane -->
+                        <path d="M24 6 Q28 8 30 8 Q32 6 30 4 Q28 6 26 8" fill="${shadow}" opacity="0.3"/>
+                        <path d="M28 10 Q31 14 33 12 Q34 10 32 10" fill="${shadow}" opacity="0.2"/>
+                        <!-- Shine -->
+                        <path d="M17 26 L15 18 L17 12 L19 18 L19 26 Z" fill="url(#shine_${id})" opacity="0.4"/>
+                        </g>
                     `;
                     break;
-                case 'p': // Pawn
+                case 'p': // Pawn — smooth rounded Staunton
                     paths = `
-                        <rect x="16" y="42" width="18" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M16 42 L19 34 L31 34 L34 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <ellipse cx="25" cy="34" rx="7" ry="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M20 34 L21 26 L29 26 L30 34" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="25" cy="20" r="7" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <path d="M14 43 Q14 46 25 46 Q36 46 36 43 Q36 40 25 40 Q14 40 14 43 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <path d="M16 40 L18 36 L32 36 L34 40 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="36" rx="8" ry="2" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Neck -->
+                        <path d="M20 36 L21 28 L29 28 L30 36 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="28" rx="5" ry="1.8" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="7.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Shine on head -->
+                        <circle cx="22.5" cy="17.5" r="4" fill="url(#shine_${id})" opacity="0.5"/>
+                        </g>
                     `;
                     break;
-                case 'w': // Wizard
+                case 'w': // Wizard — detailed hat, robe, staff
                     paths = `
-                        <rect x="15" y="42" width="20" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M14 42 L18 30 L32 30 L36 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <ellipse cx="25" cy="30" rx="8" ry="3" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M17 30 L25 4 L33 30" fill="#7B2FBE" stroke="${stroke}" stroke-width="1.5"/>
-                        <polygon points="25,10 26.5,14 30.5,14 27.5,17 28.5,21 25,18.5 21.5,21 22.5,17 19.5,14 23.5,14" fill="#ffd700"/>
-                        <circle cx="18" cy="28" r="1.5" fill="#ffd700"/>
-                        <circle cx="32" cy="28" r="1.5" fill="#ffd700"/>
+                        ${defs(`<stop offset="0%" stop-color="${isWhite ? '#e8d8f8' : '#3a2060'}"/><stop offset="50%" stop-color="${isWhite ? '#9B59B6' : '#2c1650'}"/><stop offset="100%" stop-color="${isWhite ? '#6C3483' : '#1a0a30'}"/>`,
+                        `<linearGradient id="robe_${id}" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="${isWhite ? '#A569BD' : '#4A235A'}"/>
+                            <stop offset="100%" stop-color="${isWhite ? '#7D3C98' : '#2C1650'}"/>
+                        </linearGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="12" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <!-- Robe base -->
+                        <path d="M13 44 L17 28 L33 28 L37 44 Z" fill="url(#robe_${id})" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <ellipse cx="25" cy="28" rx="9" ry="3" fill="url(#robe_${id})" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Hat -->
+                        <path d="M16 28 Q15 22 25 4 Q35 22 34 28 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Hat brim -->
+                        <ellipse cx="25" cy="28" rx="10" ry="3.5" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Star -->
+                        <polygon points="25,12 26.2,15 29.5,15 27,17.5 28,21 25,19 22,21 23,17.5 20.5,15 23.8,15" fill="#FFD700" stroke="#B8860B" stroke-width="0.5"/>
+                        <!-- Moon -->
+                        <path d="M20 20 Q22 17 20 14 Q24 16 20 20 Z" fill="#FFD700" opacity="0.7"/>
+                        <!-- Staff -->
+                        <line x1="37" y1="14" x2="37" y2="46" stroke="#8B4513" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="37" cy="12" r="3" fill="#00BFFF" stroke="#006699" stroke-width="0.8"/>
+                        <circle cx="37" cy="12" r="1.2" fill="#fff" opacity="0.6"/>
+                        </g>
                     `;
                     break;
-                case 'd': // Dragon
+                case 'd': // Dragon — detailed with wings, scales, fire
                     paths = `
-                        <rect x="14" y="42" width="22" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M16 42 L16 24 L10 16 L16 20 L18 10 L22 16 L28 16 L32 10 L34 20 L40 16 L34 24 L34 42 Z" fill="#D4380D" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="21" cy="24" r="2.5" fill="#FFD700" stroke="${stroke}" stroke-width="1"/>
-                        <circle cx="29" cy="24" r="2.5" fill="#FFD700" stroke="${stroke}" stroke-width="1"/>
-                        <circle cx="21" cy="24" r="1" fill="#000"/>
-                        <circle cx="29" cy="24" r="1" fill="#000"/>
-                        <path d="M20 34 L25 30 L30 34" fill="none" stroke="${stroke}" stroke-width="1.5"/>
-                        <line x1="22" y1="36" x2="22" y2="38" stroke="#FF6600" stroke-width="1.5"/>
-                        <line x1="25" y1="35" x2="25" y2="38" stroke="#FF6600" stroke-width="1.5"/>
-                        <line x1="28" y1="36" x2="28" y2="38" stroke="#FF6600" stroke-width="1.5"/>
+                        ${defs(`<stop offset="0%" stop-color="#FF6B35"/><stop offset="50%" stop-color="#C0392B"/><stop offset="100%" stop-color="#7B241C"/>`,
+                        `<linearGradient id="wing_${id}" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#E74C3C"/>
+                            <stop offset="100%" stop-color="#641E16"/>
+                        </linearGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="12" ry="3" fill="#3a0a0a" opacity="0.5"/>
+                        <!-- Body -->
+                        <path d="M18 44 L16 30 L15 24 L18 18 L25 16 L32 18 L35 24 L34 30 L32 44 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Wings -->
+                        <path d="M16 24 L6 12 L10 18 L8 8 L14 16 L12 10 L16 20" fill="url(#wing_${id})" stroke="${stroke}" stroke-width="0.8"/>
+                        <path d="M34 24 L44 12 L40 18 L42 8 L36 16 L38 10 L34 20" fill="url(#wing_${id})" stroke="${stroke}" stroke-width="0.8"/>
+                        <!-- Head -->
+                        <path d="M20 18 L18 12 L16 10 L20 8 L25 7 L30 8 L34 10 L32 12 L30 18 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Horns -->
+                        <path d="M20 8 L17 2 L21 7" fill="#8B0000" stroke="${stroke}" stroke-width="0.6"/>
+                        <path d="M30 8 L33 2 L29 7" fill="#8B0000" stroke="${stroke}" stroke-width="0.6"/>
+                        <!-- Eyes -->
+                        <circle cx="22" cy="12" r="2" fill="#FFD700" stroke="#000" stroke-width="0.6"/>
+                        <circle cx="28" cy="12" r="2" fill="#FFD700" stroke="#000" stroke-width="0.6"/>
+                        <ellipse cx="22" cy="12" rx="0.8" ry="1.5" fill="#000"/>
+                        <ellipse cx="28" cy="12" rx="0.8" ry="1.5" fill="#000"/>
+                        <!-- Scales -->
+                        <path d="M22 24 L25 22 L28 24 L25 26 Z" fill="#ff8844" opacity="0.5"/>
+                        <path d="M20 30 L25 28 L30 30 L25 32 Z" fill="#ff8844" opacity="0.4"/>
+                        <path d="M21 36 L25 34 L29 36 L25 38 Z" fill="#ff8844" opacity="0.3"/>
+                        <!-- Fire breath -->
+                        <path d="M24 16 L22 10 Q25 6 28 10 L26 16" fill="#FF6600" opacity="0.7"/>
+                        <path d="M24.5 14 L23.5 9 Q25 5 26.5 9 L25.5 14" fill="#FFD700" opacity="0.6"/>
+                        </g>
                     `;
                     break;
-                case 't': // Tank
+                case 't': // Tank — armored shield with rivets
                     paths = `
-                        <rect x="13" y="42" width="24" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M14 42 L14 14 Q25 4 36 14 L36 42 Z" fill="#708090" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M18 38 L18 18 Q25 10 32 18 L32 38 Z" fill="#8899AA" stroke="${stroke}" stroke-width="1"/>
-                        <line x1="25" y1="16" x2="25" y2="28" stroke="${fill}" stroke-width="2.5"/>
-                        <line x1="19" y1="22" x2="31" y2="22" stroke="${fill}" stroke-width="2.5"/>
-                        <circle cx="25" cy="34" r="2" fill="${stroke}"/>
+                        ${defs(`<stop offset="0%" stop-color="#A8B2BD"/><stop offset="50%" stop-color="#708090"/><stop offset="100%" stop-color="#4A5568"/>`,
+                        `<radialGradient id="armor_${id}" cx="0.5" cy="0.3" r="0.7">
+                            <stop offset="0%" stop-color="#BCC6D0"/>
+                            <stop offset="100%" stop-color="#5A6577"/>
+                        </radialGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="13" ry="3" fill="#2d3436" opacity="0.5"/>
+                        <!-- Base -->
+                        <path d="M12 43 Q12 46 25 46 Q38 46 38 43 Q38 40 25 40 Q12 40 12 43 Z" fill="${mainFill}" stroke="#444" stroke-width="${strokeW}"/>
+                        <path d="M14 40 L15 36 L35 36 L36 40 Z" fill="${mainFill}" stroke="#444" stroke-width="${strokeW}"/>
+                        <!-- Shield body -->
+                        <path d="M14 36 L14 14 Q25 4 36 14 L36 36 Z" fill="url(#armor_${id})" stroke="#444" stroke-width="1.2"/>
+                        <!-- Inner shield -->
+                        <path d="M18 34 L18 18 Q25 10 32 18 L32 34 Z" fill="${mainFill}" stroke="#555" stroke-width="0.8"/>
+                        <!-- Cross emblem -->
+                        <rect x="23.5" y="15" width="3" height="14" rx="0.5" fill="${isWhite ? '#B8860B' : '#C0C0C0'}" stroke="#444" stroke-width="0.5"/>
+                        <rect x="19" y="20" width="12" height="3" rx="0.5" fill="${isWhite ? '#B8860B' : '#C0C0C0'}" stroke="#444" stroke-width="0.5"/>
+                        <!-- Rivets -->
+                        <circle cx="16" cy="20" r="1.2" fill="#888" stroke="#555" stroke-width="0.5"/>
+                        <circle cx="16" cy="28" r="1.2" fill="#888" stroke="#555" stroke-width="0.5"/>
+                        <circle cx="34" cy="20" r="1.2" fill="#888" stroke="#555" stroke-width="0.5"/>
+                        <circle cx="34" cy="28" r="1.2" fill="#888" stroke="#555" stroke-width="0.5"/>
+                        <!-- Shine -->
+                        <path d="M16 14 Q25 6 28 14 L22 14 Q20 8 16 14 Z" fill="#fff" opacity="0.15"/>
+                        </g>
                     `;
                     break;
-                case 's': // Assassin
+                case 's': // Assassin — hooded figure with dagger
                     paths = `
-                        <rect x="16" y="42" width="18" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M16 42 L18 30 L32 30 L34 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M17 30 Q25 8 33 30 Z" fill="#8B0000" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M22 26 Q25 18 28 26 Z" fill="#111"/>
-                        <line x1="36" y1="10" x2="36" y2="28" stroke="#C0C0C0" stroke-width="2"/>
-                        <path d="M34 10 L38 10 L36 6 Z" fill="#C0C0C0" stroke="#888" stroke-width="0.5"/>
-                        <line x1="34" y1="28" x2="38" y2="28" stroke="#8B4513" stroke-width="2"/>
+                        ${defs(`<stop offset="0%" stop-color="${isWhite ? '#5a3a3a' : '#2a0a0a'}"/><stop offset="50%" stop-color="${isWhite ? '#8B0000' : '#1a0000'}"/><stop offset="100%" stop-color="${isWhite ? '#4a0000' : '#0a0000'}"/>`,
+                        `<linearGradient id="blade_${id}" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#E8E8E8"/>
+                            <stop offset="100%" stop-color="#999"/>
+                        </linearGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="#1a0000" opacity="0.5"/>
+                        <!-- Cloak body -->
+                        <path d="M14 44 L17 26 L33 26 L36 44 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Hood -->
+                        <path d="M17 26 Q16 16 25 8 Q34 16 33 26 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Hood shadow (face area) -->
+                        <path d="M20 24 Q20 18 25 13 Q30 18 30 24 Z" fill="#000" opacity="0.6"/>
+                        <!-- Eyes glowing -->
+                        <circle cx="22" cy="20" r="1.2" fill="#ff4444"/>
+                        <circle cx="28" cy="20" r="1.2" fill="#ff4444"/>
+                        <circle cx="22" cy="20" r="0.5" fill="#ff8888"/>
+                        <circle cx="28" cy="20" r="0.5" fill="#ff8888"/>
+                        <!-- Dagger -->
+                        <line x1="37" y1="10" x2="37" y2="30" stroke="url(#blade_${id})" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M35 10 L37 4 L39 10 Z" fill="url(#blade_${id})" stroke="#777" stroke-width="0.5"/>
+                        <rect x="35" y="29" width="4" height="3" rx="0.5" fill="#8B4513" stroke="#5a3010" stroke-width="0.5"/>
+                        <!-- Cloak detail -->
+                        <path d="M20 32 L25 30 L30 32" fill="none" stroke="${shadow}" stroke-width="0.6" opacity="0.5"/>
+                        <path d="M18 38 L25 35 L32 38" fill="none" stroke="${shadow}" stroke-width="0.6" opacity="0.5"/>
+                        </g>
                     `;
                     break;
-                case 'h': // Ghost
+                case 'h': // Ghost — ethereal translucent spirit
                     paths = `
-                        <path d="M16 44 L16 20 Q16 6 25 6 Q34 6 34 20 L34 44 L31 38 L28 44 L25 38 L22 44 L19 38 Z" fill="${isWhite ? '#E8E8FF' : '#4A4A6A'}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="20" cy="20" r="3" fill="${isWhite ? '#333' : '#AAF'}"/>
-                        <circle cx="30" cy="20" r="3" fill="${isWhite ? '#333' : '#AAF'}"/>
-                        <circle cx="20.5" cy="19.5" r="1.2" fill="#fff"/>
-                        <circle cx="30.5" cy="19.5" r="1.2" fill="#fff"/>
-                        <ellipse cx="25" cy="28" rx="3" ry="2" fill="${isWhite ? '#666' : '#222'}"/>
+                        ${defs(`<stop offset="0%" stop-color="${isWhite ? '#f0f0ff' : '#6a6a9a'}"/><stop offset="50%" stop-color="${isWhite ? '#d0d0f0' : '#4a4a7a'}"/><stop offset="100%" stop-color="${isWhite ? '#b0b0e0' : '#2a2a5a'}"/>`,
+                        `<radialGradient id="glow_${id}" cx="0.5" cy="0.4" r="0.6">
+                            <stop offset="0%" stop-color="${isWhite ? '#ffffff' : '#9999cc'}" stop-opacity="0.5"/>
+                            <stop offset="100%" stop-color="${isWhite ? '#ccccff' : '#444466'}" stop-opacity="0"/>
+                        </radialGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <!-- Glow aura -->
+                        <ellipse cx="25" cy="26" rx="16" ry="20" fill="url(#glow_${id})"/>
+                        <!-- Ghost body with wavy bottom -->
+                        <path d="M16 42 L16 20 Q16 6 25 6 Q34 6 34 20 L34 42 Q32 38 30 42 Q28 38 26 42 Q24 38 22 42 Q20 38 18 42 Q17 38 16 42 Z" fill="${mainFill}" stroke="${isWhite ? '#8888bb' : '#333'}" stroke-width="1" opacity="0.85"/>
+                        <!-- Eyes -->
+                        <ellipse cx="20" cy="20" rx="3.5" ry="4" fill="${isWhite ? '#222' : '#aaf'}"/>
+                        <ellipse cx="30" cy="20" rx="3.5" ry="4" fill="${isWhite ? '#222' : '#aaf'}"/>
+                        <circle cx="21" cy="19" r="1.5" fill="#fff"/>
+                        <circle cx="31" cy="19" r="1.5" fill="#fff"/>
+                        <!-- Mouth -->
+                        <ellipse cx="25" cy="30" rx="3.5" ry="2.5" fill="${isWhite ? '#555' : '#111'}" opacity="0.7"/>
+                        <!-- Wisps -->
+                        <path d="M18 36 Q14 34 12 38" fill="none" stroke="${isWhite ? '#ccccff' : '#6666aa'}" stroke-width="0.8" opacity="0.5"/>
+                        <path d="M32 36 Q36 34 38 38" fill="none" stroke="${isWhite ? '#ccccff' : '#6666aa'}" stroke-width="0.8" opacity="0.5"/>
+                        </g>
                     `;
                     break;
-                case 'g': // Grandpa
+                case 'g': // Grandpa — old man with cane, beard, hat
                     paths = `
-                        <rect x="16" y="42" width="18" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M18 42 L19 30 L31 30 L32 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="25" cy="22" r="8" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M19 16 Q25 8 31 16" fill="#C0C0C0" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="22" cy="22" r="1.5" fill="${stroke}"/>
-                        <circle cx="28" cy="22" r="1.5" fill="${stroke}"/>
-                        <path d="M22 27 Q25 30 28 27" fill="none" stroke="${stroke}" stroke-width="1"/>
-                        <line x1="36" y1="18" x2="36" y2="44" stroke="#8B4513" stroke-width="2.5"/>
-                        <path d="M33 18 Q36 14 39 18" fill="none" stroke="#8B4513" stroke-width="2.5"/>
+                        ${defs(stdStops)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <!-- Body -->
+                        <path d="M18 44 L19 30 L31 30 L32 44 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Head -->
+                        <circle cx="25" cy="22" r="8.5" fill="${isWhite ? '#FFE0BD' : '#8B6914'}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Hair / hat -->
+                        <path d="M17 20 Q17 12 25 10 Q33 12 33 20" fill="#C0C0C0" stroke="${stroke}" stroke-width="0.8"/>
+                        <path d="M16 20 L34 20 L34 17 L16 17 Z" fill="${isWhite ? '#556B2F' : '#2F4F2F'}" stroke="${stroke}" stroke-width="0.8"/>
+                        <!-- Eyes -->
+                        <line x1="21" y1="22" x2="23.5" y2="22" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>
+                        <line x1="26.5" y1="22" x2="29" y2="22" stroke="${stroke}" stroke-width="1.2" stroke-linecap="round"/>
+                        <!-- Glasses -->
+                        <circle cx="22" cy="22" r="2.5" fill="none" stroke="${stroke}" stroke-width="0.8"/>
+                        <circle cx="28" cy="22" r="2.5" fill="none" stroke="${stroke}" stroke-width="0.8"/>
+                        <line x1="24.5" y1="22" x2="25.5" y2="22" stroke="${stroke}" stroke-width="0.6"/>
+                        <!-- Beard -->
+                        <path d="M19 26 Q22 34 25 32 Q28 34 31 26" fill="#D3D3D3" stroke="${stroke}" stroke-width="0.6"/>
+                        <!-- Smile -->
+                        <path d="M23 27 Q25 29 27 27" fill="none" stroke="${stroke}" stroke-width="0.6"/>
+                        <!-- Cane -->
+                        <line x1="37" y1="18" x2="37" y2="46" stroke="#8B4513" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M34 18 Q37 13 40 18" fill="none" stroke="#8B4513" stroke-width="2.5" stroke-linecap="round"/>
+                        </g>
                     `;
                     break;
-                case 'l': // Lizard
+                case 'l': // Lizard — detailed reptile with texture
                     paths = `
-                        <ellipse cx="25" cy="36" rx="12" ry="6" fill="#228B22" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="20" cy="28" r="7" fill="#2ECC40" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="17" cy="26" r="3" fill="#ADFF2F" stroke="${stroke}" stroke-width="1"/>
-                        <circle cx="17" cy="26" r="1.2" fill="#000"/>
-                        <path d="M26 26 Q32 22 36 26 Q32 30 26 26" fill="#FF4444"/>
-                        <path d="M30 38 Q38 44 42 40 Q40 36 34 38" fill="#228B22" stroke="${stroke}" stroke-width="1"/>
-                        <line x1="14" y1="40" x2="10" y2="44" stroke="#228B22" stroke-width="2"/>
-                        <line x1="20" y1="42" x2="18" y2="46" stroke="#228B22" stroke-width="2"/>
-                        <line x1="30" y1="42" x2="32" y2="46" stroke="#228B22" stroke-width="2"/>
-                        <line x1="36" y1="40" x2="40" y2="44" stroke="#228B22" stroke-width="2"/>
+                        ${defs(`<stop offset="0%" stop-color="#7CFC00"/><stop offset="50%" stop-color="#228B22"/><stop offset="100%" stop-color="#0B5345"/>`,
+                        `<radialGradient id="eye_${id}" cx="0.4" cy="0.4" r="0.5">
+                            <stop offset="0%" stop-color="#ADFF2F"/>
+                            <stop offset="100%" stop-color="#556B2F"/>
+                        </radialGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <!-- Shadow -->
+                        <ellipse cx="25" cy="44" rx="14" ry="3" fill="#0a2a0a" opacity="0.4"/>
+                        <!-- Tail -->
+                        <path d="M30 38 Q38 42 42 38 Q44 34 40 36 Q36 38 32 36" fill="${mainFill}" stroke="#0B5345" stroke-width="0.8"/>
+                        <!-- Body -->
+                        <ellipse cx="25" cy="37" rx="12" ry="6" fill="${mainFill}" stroke="#0B5345" stroke-width="${strokeW}"/>
+                        <!-- Body scales -->
+                        <path d="M18 35 Q20 33 22 35 Q24 33 26 35 Q28 33 30 35 Q32 33 34 35" fill="none" stroke="#1a6b1a" stroke-width="0.6" opacity="0.6"/>
+                        <path d="M16 38 Q18 36 20 38 Q22 36 24 38 Q26 36 28 38 Q30 36 32 38" fill="none" stroke="#1a6b1a" stroke-width="0.6" opacity="0.6"/>
+                        <!-- Spine -->
+                        <path d="M20 32 L22 30 L24 32 L26 30 L28 32 L30 30 L32 32" fill="none" stroke="#006400" stroke-width="1"/>
+                        <!-- Head -->
+                        <ellipse cx="18" cy="30" rx="8" ry="6" fill="${mainFill}" stroke="#0B5345" stroke-width="${strokeW}"/>
+                        <!-- Eye -->
+                        <circle cx="15" cy="28" r="3.5" fill="url(#eye_${id})" stroke="#0B5345" stroke-width="0.8"/>
+                        <ellipse cx="15" cy="28" rx="1" ry="2.5" fill="#000"/>
+                        <!-- Mouth -->
+                        <path d="M11 32 Q14 34 18 32" fill="none" stroke="#0B5345" stroke-width="1"/>
+                        <!-- Tongue -->
+                        <path d="M11 32 Q8 30 6 32 Q8 34 10 32" fill="#FF4444" stroke="#cc0000" stroke-width="0.4"/>
+                        <!-- Legs -->
+                        <path d="M16 40 L12 44 L10 43 M12 44 L11 46" stroke="#1a6b1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                        <path d="M22 42 L20 46 L19 45 M20 46 L18 48" stroke="#1a6b1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                        <path d="M30 42 L32 46 L33 45 M32 46 L34 48" stroke="#1a6b1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                        <path d="M34 40 L38 44 L39 43 M38 44 L40 46" stroke="#1a6b1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                        </g>
                     `;
                     break;
-                case 'x': // Saboteur
+                case 'x': // Saboteur — masked figure with bomb
                     paths = `
-                        <rect x="14" y="42" width="22" height="4" rx="1" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <path d="M16 42 L18 30 L32 30 L34 42 Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <circle cx="25" cy="22" r="8" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>
-                        <rect x="17" y="18" width="16" height="5" rx="2" fill="#333" stroke="${stroke}" stroke-width="1"/>
-                        <circle cx="22" cy="20" r="1.5" fill="#ff4444"/>
-                        <circle cx="28" cy="20" r="1.5" fill="#ff4444"/>
-                        <circle cx="38" cy="16" r="5" fill="#333" stroke="#555" stroke-width="1.5"/>
-                        <line x1="38" y1="11" x2="40" y2="6" stroke="#FF6600" stroke-width="1.5"/>
-                        <circle cx="40" cy="5" r="2" fill="#FF6600" opacity="0.8"/>
+                        ${defs(stdStops, `<radialGradient id="fuse_${id}" cx="0.5" cy="0.2" r="0.5">
+                            <stop offset="0%" stop-color="#FFD700"/>
+                            <stop offset="50%" stop-color="#FF6600"/>
+                            <stop offset="100%" stop-color="#FF0000"/>
+                        </radialGradient>`)}
+                        <g filter="url(#shadow_${id})">
+                        <ellipse cx="25" cy="44" rx="11" ry="3" fill="${baseDark}" opacity="0.5"/>
+                        <!-- Body -->
+                        <path d="M17 44 L18 28 L32 28 L33 44 Z" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="9" fill="${mainFill}" stroke="${stroke}" stroke-width="${strokeW}"/>
+                        <!-- Mask/goggles -->
+                        <rect x="16" y="17" width="18" height="6" rx="3" fill="#222" stroke="#444" stroke-width="0.8"/>
+                        <circle cx="21" cy="20" r="3" fill="#111" stroke="#555" stroke-width="0.6"/>
+                        <circle cx="29" cy="20" r="3" fill="#111" stroke="#555" stroke-width="0.6"/>
+                        <!-- Goggle shine -->
+                        <circle cx="21" cy="19.5" r="1.5" fill="#ff3333" opacity="0.8"/>
+                        <circle cx="29" cy="19.5" r="1.5" fill="#ff3333" opacity="0.8"/>
+                        <circle cx="20.5" cy="19" r="0.6" fill="#ff8888"/>
+                        <circle cx="28.5" cy="19" r="0.6" fill="#ff8888"/>
+                        <!-- Strap -->
+                        <path d="M16 20 Q13 18 14 14" fill="none" stroke="#444" stroke-width="0.8"/>
+                        <path d="M34 20 Q37 18 36 14" fill="none" stroke="#444" stroke-width="0.8"/>
+                        <!-- Grin -->
+                        <path d="M21 25 Q25 28 29 25" fill="none" stroke="${isWhite ? '#666' : '#aaa'}" stroke-width="0.8"/>
+                        <!-- Bomb -->
+                        <circle cx="39" cy="18" r="5.5" fill="#333" stroke="#222" stroke-width="1"/>
+                        <circle cx="37" cy="16" r="1.5" fill="#555" opacity="0.4"/>
+                        <!-- Fuse -->
+                        <path d="M39 12 Q40 8 42 7" fill="none" stroke="#8B4513" stroke-width="1.2"/>
+                        <!-- Spark -->
+                        <circle cx="42" cy="6" r="2.5" fill="url(#fuse_${id})"/>
+                        <circle cx="42" cy="6" r="1.2" fill="#FFD700" opacity="0.9"/>
+                        </g>
                     `;
                     break;
                 default:
-                    paths = `<circle cx="25" cy="25" r="12" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+                    paths = `<circle cx="25" cy="25" r="12" fill="${baseMid}" stroke="${stroke}" stroke-width="2"/>`;
             }
 
             return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100%" height="100%" style="max-width:48px;max-height:48px;display:block;margin:auto;">${paths}</svg>`;
@@ -2168,6 +2447,13 @@
         let gameActive = false;
         let activeAbility = null;
         let pieceIdCounter = 0;
+        let wCapturedScore = 0; // points white has earned by capturing black pieces
+        let bCapturedScore = 0; // points black has earned by capturing white pieces
+
+        const captureMaterialValues = {
+            'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9, 'k': 0,
+            'w': 5, 'g': 3, 'l': 8, 't': 7, 's': 3, 'd': 9, 'h': 1, 'x': 4
+        };
         let landmines = [];
 
         let gameMode = 'pvp';
@@ -2727,6 +3013,8 @@
             if (gameMode === 'online') {
                 // Show the lobby and connect
                 document.getElementById('mode-selector').classList.add('hidden');
+                document.querySelector('.container').style.display = '';
+                document.querySelector('.controls').style.display = '';
                 document.getElementById('online-lobby-overlay').classList.remove('hidden');
                 document.getElementById('lobby-menu').style.display = 'block';
                 document.getElementById('lobby-waiting').style.display = 'none';
@@ -2736,8 +3024,10 @@
             }
 
             document.getElementById('mode-selector').classList.add('hidden');
+            // Show the game area
+            document.querySelector('.container').style.display = '';
             document.getElementById('battle-title').textContent = 'CHESS WARFARE';
-            
+
             initStandardBoard();
             initPieceReferenceGuide();
             gameActive = true;
@@ -4419,6 +4709,11 @@
                 }
             }
 
+            // Record capture if a non-king enemy piece is being taken by movement
+            if (targetPiece && targetPiece.type[1] !== 'k') {
+                recordCapture(targetPiece);
+            }
+
             board[toRow][toCol] = movingPiece;
             board[fromRow][fromCol] = null;
 
@@ -4912,6 +5207,7 @@
                     }, 300);
                     return true;
                 }
+                recordCapture(piece); // track score for HP-drain kills
                 board[row][col] = null;
                 return true;
             }
@@ -5101,30 +5397,22 @@
         }
 
         function calculateMaterialScore() {
-            const materialValues = {
-                'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9,
-                'w': 5, 'g': 3, 'l': 8, 't': 7, 's': 3, 'd': 9, 'h': 1, 'x': 4
-            };
+            // Display accumulated capture scores (go up as pieces are taken)
+            document.getElementById('white-score').textContent = wCapturedScore;
+            document.getElementById('black-score').textContent = bCapturedScore;
+        }
 
-            let whiteScore = 0;
-            let blackScore = 0;
-
-            for (let row = 0; row < 8; row++) {
-                for (let col = 0; col < 8; col++) {
-                    const piece = board[row][col];
-                    if (piece && piece.type[1] !== 'k') {
-                        const value = materialValues[piece.type[1]] || 1;
-                        if (piece.type[0] === 'w') {
-                            whiteScore += value;
-                        } else {
-                            blackScore += value;
-                        }
-                    }
-                }
+        function recordCapture(capturedPiece) {
+            if (!capturedPiece) return;
+            const type = capturedPiece.type[1];
+            const color = capturedPiece.type[0];
+            const val = captureMaterialValues[type] || 1;
+            if (color === 'b') {
+                wCapturedScore += val; // white captured a black piece
+            } else {
+                bCapturedScore += val; // black captured a white piece
             }
-
-            document.getElementById('white-score').textContent = whiteScore;
-            document.getElementById('black-score').textContent = blackScore;
+            calculateMaterialScore();
         }
 
         function updateTurnIndicator() {
@@ -5223,6 +5511,8 @@
             currentTurn = 'white';
             gameActive = true;
             activeAbility = null;
+            wCapturedScore = 0;
+            bCapturedScore = 0;
             selectedSquare = null;
             isAIThinking = false;
             landmines = [];
@@ -5241,6 +5531,8 @@
             landmines = [];
             myColor = null;
             myPlayerNumber = null;
+            wCapturedScore = 0;
+            bCapturedScore = 0;
 
             // Close online connection if open
             if (ws) { ws.close(); ws = null; onlineConnected = false; }
@@ -5249,6 +5541,9 @@
             board = Array(8).fill(null).map(() => Array(8).fill(null));
             hideMessage();
             renderBoard();
+
+            // Hide game area, show mode selector
+            document.querySelector('.container').style.display = 'none';
 
             document.getElementById('pvp-btn').classList.remove('selected');
             document.getElementById('pvc-btn').classList.remove('selected');
@@ -5494,7 +5789,25 @@
         }
 
         window.onload = function() {
-            initRankedInfoDisplay();
+            // Reset everything to home screen state
+            gameActive = false;
+            currentTurn = 'white';
+            board = Array(8).fill(null).map(() => Array(8).fill(null));
+
+            // Clear any baked-in game state from saved HTML
+            document.getElementById('board').innerHTML = '';
+            document.getElementById('white-score').textContent = '0';
+            document.getElementById('black-score').textContent = '0';
+            document.getElementById('turn-display').innerHTML = '⬜ White\'s Turn';
+            document.getElementById('battle-title').textContent = 'CHESS WARFARE';
+            document.getElementById('piece-reference-grid').innerHTML = '';
+
+            // Hide the game area, show mode selector
+            document.querySelector('.container').style.display = 'none';
+
+            // Init ranked display if it exists
+            if (typeof initRankedInfoDisplay === 'function') initRankedInfoDisplay();
+
             document.getElementById('mode-selector').classList.remove('hidden');
             document.getElementById('lobby-code-input').addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') onlineJoinRoom();
